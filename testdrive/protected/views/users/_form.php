@@ -23,13 +23,20 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'organization'); ?>
-		<?php echo $form->textField($model,'organization',array('size'=>60,'maxlength'=>128)); ?>
+		<?php
+			$orgs = CHtml::listData(Organizations::model()->findAll(array('order'=>'name')), 'orgID', 'name');
+			echo $form->dropDownList($model,'organization', $orgs, array('empty'=>Yii::t('fim','Select')));
+		?>
 		<?php echo $form->error($model,'organization'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'state'); ?>
-		<?php echo $form->textField($model,'state',array('size'=>2,'maxlength'=>2)); ?>
+		<?php 
+			$states = CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr');
+			echo $form->dropDownList($model, 'state', $states, array('empty'=>Yii::t('fim','Select')));
+		?>
+		<?php //echo $form->dropDownList($model,'state', CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr')); ?>
 		<?php echo $form->error($model,'state'); ?>
 	</div>
 
@@ -41,13 +48,20 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'birthday'); ?>
-		<?php echo $form->textField($model,'birthday'); ?>
+		<?php echo $form->dateField($model,'birthday'); ?>
 		<?php echo $form->error($model,'birthday'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'gender'); ?>
-		<?php echo $form->textField($model,'gender',array('size'=>2,'maxlength'=>2)); ?>
+		<?php 
+			$genders = array(
+				'f' => Yii::t('fim','Female'), 
+				'm' => Yii::t('fim','Male'), 
+			);
+			echo $form->dropDownList($model, 'gender', $genders, array('empty'=>Yii::t('fim','Select')));
+		?>
+		<?php //echo $form->textField($model,'gender',array('size'=>2,'maxlength'=>2)); ?>
 		<?php echo $form->error($model,'gender'); ?>
 	</div>
 
@@ -60,12 +74,14 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->textField($model,'repeatEmail',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'password'); ?>
 		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->passwordField($model,'repeatPassword',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'password'); ?>
 	</div>
 

@@ -1,5 +1,8 @@
 <?php
 
+// autoload "protected/libs/PasswordHash.php"
+Yii::import('application.libs.PasswordHash');
+
 /**
  * This is the model class for table "users".
  *
@@ -17,6 +20,12 @@
  */
 class Users extends CActiveRecord
 {
+	// holds the email confirmation word
+	public $repeatEmail;
+
+	// holds the password confirmation word
+	public $repeatPassword;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -43,13 +52,17 @@ class Users extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, organization, state, university, birthday, gender, initiationYear, email, password', 'required'),
+			array('name, organization, state, university, birthday, gender, initiationYear, email, repeatEmail, password, repeatPassword', 'required'),
 			array('name, organization, university, email, password', 'length', 'max'=>128),
 			array('state, gender', 'length', 'max'=>2),
 			array('initiationYear', 'length', 'max'=>4),
+			array('initiationYear', 'match', 'pattern'=>'/^[0-9]+$/', 'message'=>'Must be a valid year.'),
+			array('email, repeatEmail', 'email', 'pattern'=>'/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.edu)$/', 'message'=>'Must be a .edu email address.'),
+			array('email', 'compare', 'compareAttribute'=>'repeatEmail'),
+			array('password', 'compare', 'compareAttribute'=>'repeatPassword'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('userID, name, organization, state, university, birthday, gender, initiationYear, email, password', 'safe', 'on'=>'search'),
+			array('userID, name, organization, state, university, birthday, gender, initiationYear, email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,8 +74,8 @@ class Users extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			array('organization' => array(self::BELONGS_TO, 'Organizations', 'organization')),
-			array('state' => array(self::BELONGS_TO, 'States', 'state')),
+			'organization' => array(self::BELONGS_TO, 'Organizations', 'organization'),
+			'state' => array(self::BELONGS_TO, 'States', 'state'),
 		);
 	}
 
@@ -111,4 +124,22 @@ class Users extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	public function validatePassword($password) // $password is the user input
+    {
+        // Try to use stronger but system-specific hashes, with a possible fallback to
+        // the weaker portable hashes.
+        $hasher = new PasswordHash(8, FALSE);
+        return $hasher->checkPassword($password, $this->password);
+    }
+ 
+    public function beforeSave()
+    {
+        // Replace the raw password with the hashed one
+        if (isset($this->password)) {
+            $hasher = new PasswordHash(8, FALSE);
+            $this->password = $hasher->HashPassword($this->password);
+        }
+        return parent::beforeSave();
+    }
 }

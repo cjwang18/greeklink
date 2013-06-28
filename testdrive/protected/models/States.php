@@ -54,6 +54,7 @@ class States extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'users' => array(self::HAS_MANY, 'Users', 'state')
+			'universities' => array(self::HAS_MANY, 'Universities', 'state')
 		);
 	}
 

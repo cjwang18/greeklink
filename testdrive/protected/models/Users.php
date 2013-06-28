@@ -76,6 +76,7 @@ class Users extends CActiveRecord
 		return array(
 			'organization' => array(self::BELONGS_TO, 'Organizations', 'organization'),
 			'state' => array(self::BELONGS_TO, 'States', 'state'),
+			'university' => array(self::BELONGS_TO, 'Universities', 'university'),
 		);
 	}
 

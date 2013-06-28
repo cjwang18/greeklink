@@ -32,7 +32,7 @@ class UsersController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update', 'loadUniversities'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -168,6 +168,15 @@ class UsersController extends Controller
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
+		}
+	}
+
+	public function actionLoadUniversities() {
+		$data = Universities::model()->findAll('state=:state', array(':state'=>(int) $_POST['Users']['state']));
+		$data = CHtml::listData($data, 'universityID', 'name');
+
+		foreach ($data as $value => $name) {
+			echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
 		}
 	}
 }

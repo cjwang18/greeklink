@@ -21,15 +21,7 @@
 		<?php echo $form->error($model,'name'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'organization'); ?>
-		<?php
-			$orgs = CHtml::listData(Organizations::model()->findAll(array('order'=>'name')), 'orgID', 'name');
-			echo $form->dropDownList($model,'organization', $orgs, array('empty'=>Yii::t('fim','Select')));
-		?>
-		<?php echo $form->error($model,'organization'); ?>
-	</div>
-
+	<!--
 	<div class="row">
 		<?php echo $form->labelEx($model,'state'); ?>
 		<?php 
@@ -43,6 +35,40 @@
 	<div class="row">
 		<?php echo $form->labelEx($model,'university'); ?>
 		<?php echo $form->textField($model,'university',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'university'); ?>
+	</div>-->
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'organization'); ?>
+		<?php
+			$orgs = CHtml::listData(Organizations::model()->findAll(array('order'=>'name')), 'orgID', 'name');
+			echo $form->dropDownList($model,'organization', $orgs, array('empty'=>Yii::t('fim','Select')));
+		?>
+		<?php echo $form->error($model,'organization'); ?>
+	</div>	
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'state'); ?>
+		<?php 
+			$states = CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr');
+			echo $form->dropDownList($model, 'state', $states, 
+				array(
+					'prompt' => 'Select',
+					'ajax' => array(
+						'type' => 'POST',
+						'url' => CController::createUrl('loadUniversities'),
+						'update' => '#university_id',
+						)
+					)
+				);
+		?>
+		<?php //echo $form->dropDownList($model,'state', CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr')); ?>
+		<?php echo $form->error($model,'state'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'university'); ?>
+		<?php echo CHtml::dropDownList('university_id','university_id', array(), array('empty'=>Yii::t('fim','Select'))); ?>
 		<?php echo $form->error($model,'university'); ?>
 	</div>
 
@@ -88,6 +114,7 @@
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
+		
 
 <?php $this->endWidget(); ?>
 

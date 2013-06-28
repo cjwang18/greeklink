@@ -21,23 +21,6 @@
 		<?php echo $form->error($model,'name'); ?>
 	</div>
 
-	<!--
-	<div class="row">
-		<?php echo $form->labelEx($model,'state'); ?>
-		<?php 
-			$states = CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr');
-			echo $form->dropDownList($model, 'state', $states, array('empty'=>Yii::t('fim','Select')));
-		?>
-		<?php //echo $form->dropDownList($model,'state', CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr')); ?>
-		<?php echo $form->error($model,'state'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'university'); ?>
-		<?php echo $form->textField($model,'university',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'university'); ?>
-	</div>-->
-
 	<div class="row">
 		<?php echo $form->labelEx($model,'organization'); ?>
 		<?php
@@ -62,7 +45,6 @@
 					)
 				);
 		?>
-		<?php //echo $form->dropDownList($model,'state', CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr')); ?>
 		<?php echo $form->error($model,'state'); ?>
 	</div>
 
@@ -87,7 +69,6 @@
 			);
 			echo $form->dropDownList($model, 'gender', $genders, array('empty'=>Yii::t('fim','Select')));
 		?>
-		<?php //echo $form->textField($model,'gender',array('size'=>2,'maxlength'=>2)); ?>
 		<?php echo $form->error($model,'gender'); ?>
 	</div>
 

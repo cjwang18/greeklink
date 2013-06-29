@@ -28,7 +28,7 @@ class UsersController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('create', 'loadUniversities'),
+				'actions'=>array('create', 'loadUniversities', 'loadOrganizations'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -171,10 +171,25 @@ class UsersController extends Controller
 		}
 	}
 
+	public function actionLoadOrganizations() {
+		if ($_POST['Users']['gender'] == 'm') {
+			$data = Organizations::model()->findAll('type=:type', array(':type'=> 'F'));
+		} else if ($_POST['Users']['gender'] == 'f') {
+			$data = Organizations::model()->findAll('type=:type', array(':type'=> 'S'));
+		}
+		$data = CHtml::listData($data, 'orgID', 'name');
+
+		echo "<option value=''>Select</option>";
+		foreach ($data as $value => $name) {
+			echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
+		}
+	}
+
 	public function actionLoadUniversities() {
 		$data = Universities::model()->findAll('state=:state', array(':state'=>(int) $_POST['Users']['state']));
 		$data = CHtml::listData($data, 'universityID', 'name');
 
+		echo "<option value=''>Select</option>";
 		foreach ($data as $value => $name) {
 			echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
 		}

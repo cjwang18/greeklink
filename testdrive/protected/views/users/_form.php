@@ -22,13 +22,47 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'birthday'); ?>
+		<?php echo $form->dateField($model,'birthday'); ?>
+		<?php echo $form->error($model,'birthday'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'gender'); ?>
+		<?php 
+			$genders = array(
+				'f' => Yii::t('fim','Female'), 
+				'm' => Yii::t('fim','Male'), 
+			);
+			echo $form->dropDownList($model, 'gender', $genders, 
+				array(
+					'prompt' => 'Select',
+					'ajax' => array(
+						'type' => 'POST',
+						'url' => CController::createUrl('loadOrganizations'),
+						'update' => '#organization_id',
+					)
+				)
+			);
+		?>
+		<?php echo $form->error($model,'gender'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'organization'); ?>
 		<?php
-			$orgs = CHtml::listData(Organizations::model()->findAll(array('order'=>'name')), 'orgID', 'name');
-			echo $form->dropDownList($model,'organization', $orgs, array('empty'=>Yii::t('fim','Select')));
+			/*$orgs = CHtml::listData(Organizations::model()->findAll(array('order'=>'name')), 'orgID', 'name');
+			echo $form->dropDownList($model,'organization', $orgs, array('empty'=>Yii::t('fim','Select')));*/
 		?>
+		<?php echo CHtml::dropDownList('organization_id','organization_id', array(), array('empty'=>Yii::t('fim','Select'))); ?>
 		<?php echo $form->error($model,'organization'); ?>
-	</div>	
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'initiationYear'); ?>
+		<?php echo $form->textField($model,'initiationYear',array('size'=>4,'maxlength'=>4)); ?>
+		<?php echo $form->error($model,'initiationYear'); ?>
+	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'state'); ?>
@@ -52,30 +86,6 @@
 		<?php echo $form->labelEx($model,'university'); ?>
 		<?php echo CHtml::dropDownList('university_id','university_id', array(), array('empty'=>Yii::t('fim','Select'))); ?>
 		<?php echo $form->error($model,'university'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'birthday'); ?>
-		<?php echo $form->dateField($model,'birthday'); ?>
-		<?php echo $form->error($model,'birthday'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'gender'); ?>
-		<?php 
-			$genders = array(
-				'f' => Yii::t('fim','Female'), 
-				'm' => Yii::t('fim','Male'), 
-			);
-			echo $form->dropDownList($model, 'gender', $genders, array('empty'=>Yii::t('fim','Select')));
-		?>
-		<?php echo $form->error($model,'gender'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'initiationYear'); ?>
-		<?php echo $form->textField($model,'initiationYear',array('size'=>4,'maxlength'=>4)); ?>
-		<?php echo $form->error($model,'initiationYear'); ?>
 	</div>
 
 	<div class="row">

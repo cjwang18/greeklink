@@ -16,6 +16,7 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.extensions.PasswordHash',
 	),
 
 	'modules'=>array(
@@ -89,5 +90,9 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
+		'phpass'=>array(
+			'iteration_count_log2'=>8,
+			'portable_hashes'=>true,
+		),
 	),
 );

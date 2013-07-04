@@ -1,8 +1,5 @@
 <?php
 
-// autoload "protected/libs/PasswordHash.php"
-Yii::import('application.libs.PasswordHash');
-
 /**
  * This is the model class for table "users".
  *
@@ -130,7 +127,7 @@ class Users extends CActiveRecord
     {
         // Try to use stronger but system-specific hashes, with a possible fallback to
         // the weaker portable hashes.
-        $hasher = new PasswordHash(8, FALSE);
+        $hasher = new PasswordHash(Yii::app()->params['phpass']['iteration_count_log2'], Yii::app()->params['phpass']['portable_hashes']);
         return $hasher->checkPassword($password, $this->password);
     }
  
@@ -138,7 +135,7 @@ class Users extends CActiveRecord
     {
         // Replace the raw password with the hashed one
         if (isset($this->password)) {
-            $hasher = new PasswordHash(8, FALSE);
+            $hasher = new PasswordHash(Yii::app()->params['phpass']['iteration_count_log2'], Yii::app()->params['phpass']['portable_hashes']);
             $this->password = $hasher->HashPassword($this->password);
         }
         return parent::beforeSave();

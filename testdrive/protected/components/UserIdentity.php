@@ -1,8 +1,5 @@
 <?php
 
-// autoload "protected/lib/PasswordHash.php"
-Yii::import('application.lib.PasswordHash');
-
 /**
  * UserIdentity represents the data needed to identity a user.
  * It contains the authentication method that checks if the provided
@@ -23,11 +20,20 @@ class UserIdentity extends CUserIdentity
 	public function authenticate()
 	{
 		$user = Users::model()->findByAttributes(array('email'=>$this->username));
+		$hasher = new PasswordHash(Yii::app()->params['phpass']['iteration_count_log2'], Yii::app()->params['phpass']['portable_hashes']);
 
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		elseif(!$user->validatePassword($this->password))
+		elseif(!$user->validatePassword($this->password)) {
+			echo $user->password.'<br>'; // this is the password as it is in the db
+			echo $this->password.'<br>'; // this is the password the login user inputted before encryption
+			echo $hasher->HashPassword($this->password).'<br>'; // this is the password inputted after encryption
+			if ($hasher->checkPassword($user->password, $this->password))
+				echo 'true<br>';
+			else
+				echo 'false<br>';
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
+		}
 		else {
 			$this->errorCode=self::ERROR_NONE;
 			$this->_id=$user['userID'];

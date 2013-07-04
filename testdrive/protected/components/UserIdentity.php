@@ -24,16 +24,8 @@ class UserIdentity extends CUserIdentity
 
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		elseif(!$user->validatePassword($this->password)) {
-			echo $user->password.'<br>'; // this is the password as it is in the db
-			echo $this->password.'<br>'; // this is the password the login user inputted before encryption
-			echo $hasher->HashPassword($this->password).'<br>'; // this is the password inputted after encryption
-			if ($hasher->checkPassword($user->password, $this->password))
-				echo 'true<br>';
-			else
-				echo 'false<br>';
+		elseif(!$user->validatePassword($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-		}
 		else {
 			$this->errorCode=self::ERROR_NONE;
 			$this->_id=$user['userID'];

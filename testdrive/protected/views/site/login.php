@@ -3,51 +3,52 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
+$this->layout='landing';
 $this->pageTitle=Yii::app()->name . ' - Login';
 $this->breadcrumbs=array(
 	'Login',
 );
 ?>
 
-<h1>Login</h1>
+<div class="divFormCenter">
+	<?php $form=$this->beginWidget('CActiveForm', array(
+		'id'=>'login-form',
+		'enableClientValidation'=>true,
+		'clientOptions'=>array(
+			'validateOnSubmit'=>true,
+		),
+		'htmlOptions'=>array(
+			'class'=>'form-signin',
+		),
+	)); ?>
 
-<p>Please fill out the following form with your login credentials:</p>
+		<div class="divLogo">
+			<h1 class="form-signin-heading text-center" >GreekLink</h1>
+		</div>
 
-<div class="form">
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'login-form',
-	'enableClientValidation'=>true,
-	'clientOptions'=>array(
-		'validateOnSubmit'=>true,
-	),
-)); ?>
+		<?php echo $form->textField($model,'email', array(
+			'class'=>'input-block-level',
+			'placeholder'=>'Email',
+		)); ?>
+		<?php echo $form->error($model,'email'); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username'); ?>
-		<?php echo $form->error($model,'username'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password'); ?>
+		<?php echo $form->passwordField($model,'password', array(
+			'class'=>'input-block-level',
+			'placeholder'=>'Password',
+		)); ?>
 		<?php echo $form->error($model,'password'); ?>
-		<p class="hint">
-			Hint: You may login with <kbd>demo</kbd>/<kbd>demo</kbd> or <kbd>admin</kbd>/<kbd>admin</kbd>.
-		</p>
-	</div>
 
-	<div class="row rememberMe">
-		<?php echo $form->checkBox($model,'rememberMe'); ?>
-		<?php echo $form->label($model,'rememberMe'); ?>
-		<?php echo $form->error($model,'rememberMe'); ?>
-	</div>
+		<?php echo CHtml::submitButton('Log in', array(
+			'class'=>'btn btn-large btn-primary btn-block button-padding button-margin',
+		)); ?>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Login'); ?>
-	</div>
+		<?php echo CHtml::htmlButton('Forgot password?', array(
+			'class'=>'btn btn-large button-margin button-half',
+		)); ?>
 
-<?php $this->endWidget(); ?>
-</div><!-- form -->
+		<?php echo CHtml::htmlButton('Sign up', array(
+			'class'=>'btn btn-large button-margin button-half pull-right',
+		)); ?>
+
+	<?php $this->endWidget(); ?>
+</div>

@@ -42,13 +42,18 @@ $this->breadcrumbs=array(
 			'class'=>'btn btn-large btn-primary btn-block button-padding button-margin',
 		)); ?>
 
-		<?php echo CHtml::htmlButton('Forgot password?', array(
-			'class'=>'btn btn-large button-margin button-half',
-		)); ?>
+		<?php //echo CHtml::htmlButton('Forgot password?', array(
+			//'class'=>'btn btn-large button-margin button-half',
+		//)); ?>
 
-		<?php echo CHtml::htmlButton('Sign up', array(
-			'class'=>'btn btn-large button-margin button-half pull-right',
-		)); ?>
+		<?php //echo CHtml::htmlButton('Sign up', array(
+			//'class'=>'btn btn-large button-margin button-half pull-right',
+			//'submit'=>array('site/signup'),
+		//)); ?>
+
+		<?php echo CHtml::link('Forgot password?',array('site/passwordRecovery'),array('class'=>'btn btn-large button-margin button-half')); ?>
+
+		<?php echo CHtml::link('Sign up',array('users/create'),array('class'=>'btn btn-large button-margin button-half pull-right')); ?>
 
 	<?php $this->endWidget(); ?>
 </div>

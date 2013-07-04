@@ -179,7 +179,7 @@ class UsersController extends Controller
 		}
 		$data = CHtml::listData($data, 'orgID', 'name');
 
-		echo "<option value=''>Select</option>";
+		echo "<option value=''>Select Organization</option>";
 		foreach ($data as $value => $name) {
 			echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
 		}
@@ -189,7 +189,7 @@ class UsersController extends Controller
 		$data = Universities::model()->findAll('state=:state', array(':state'=>(int) $_POST['Users']['state']));
 		$data = CHtml::listData($data, 'universityID', 'name');
 
-		echo "<option value=''>Select</option>";
+		echo "<option value=''>Select University</option>";
 		foreach ($data as $value => $name) {
 			echo CHtml::tag('option', array('value' => $value), CHtml::encode($name), true);
 		}

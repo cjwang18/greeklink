@@ -79,6 +79,13 @@ class SiteController extends Controller
 	}
 
 	/**
+	 * Displays the signup page
+	 */
+	public function actionSignup() {
+		$this->render('signup');
+	}
+
+	/**
 	 * Displays the login page
 	 */
 	public function actionLogin()

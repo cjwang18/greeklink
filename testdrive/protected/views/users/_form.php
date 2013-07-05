@@ -4,7 +4,7 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="divFormCenter">
+<div class="suFormCenter">
 
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'users-form',
@@ -22,7 +22,7 @@
 			<?php echo $form->textField($model,'name',array(
 				'size'=>60,
 				'maxlength'=>128,
-				'class'=>'form-su-fullWidth',
+				'class'=>'form-su-fullWidth form-su-name',
 				'placeholder'=>'Name',
 			)); ?>
 			<?php echo $form->error($model,'name'); ?>
@@ -78,7 +78,7 @@
 							'url' => CController::createUrl('loadUniversities'),
 							'update' => '#university_id',
 							),
-						'class'=>'form-topMargin form-su-halfWidth'
+						'class'=>'form-topMargin form-su-state'
 						)					
 					);
 			?>
@@ -87,7 +87,7 @@
 			<?php echo CHtml::activeDropDownList($model,'university', array(), 
 				array(
 					'empty'=>'Select University',
-					'class'=>'form-topMargin',
+					'class'=>'form-topMargin form-su-university',
 					'id'=>'university_id'
 				)
 			); ?>
@@ -97,7 +97,7 @@
 				array(
 					'size'=>60,
 					'maxlength'=>128,
-					'class'=>'su-textfield-width',
+					'class'=>'form-topMargin form-su-email',
 					'placeholder'=>'Email',
 				)
 			); ?>
@@ -105,7 +105,7 @@
 				array(
 					'size'=>60,
 					'maxlength'=>128,
-					'class'=>'signup-width',
+					'class'=>'form-topMargin form-su-email',
 					'placeholder'=>'Confirm Email',
 				)
 			); ?>
@@ -115,7 +115,7 @@
 				array(
 					'size'=>60,
 					'maxlength'=>128,
-					'class'=>'signup-width',
+					'class'=>'form-topMargin rightMargin form-su-password',
 					'placeholder'=>'Password',
 				)
 			); ?>
@@ -123,7 +123,7 @@
 				array(
 					'size'=>60,
 					'maxlength'=>128,
-					'class'=>'signup-width',
+					'class'=>'form-topMargin form-su-password',
 					'placeholder'=>'Confirm Password',
 				)
 			); ?>

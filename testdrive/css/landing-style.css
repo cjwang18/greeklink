@@ -1,8 +1,12 @@
+@font-face
+{
+    font-family: allerLight;
+    src: url(../fonts/aller_light.ttf);
+}
 
 html, body {
     height: 100%;
     width: 100%;
-    font-family: 'Average', serif;
 }
 
 body
@@ -29,11 +33,23 @@ body
     height: 500px;
 }
 
+.suFormCenter{
+    text-align: center;
+    position: absolute;
+    padding: 0;
+    top: 50%;
+    left: 50%;
+    margin-top: -280px;
+    margin-left: -225px;
+    width: 450px;
+    height: 560px;
+}
+
 .divLogo {
     height: 150px;
     vertical-align:middle;
     text-align: center;
-    font-size: 48px;
+    font-size: 65px;
     line-height: 150px;
 }
 
@@ -41,7 +57,7 @@ body
     height: 100px;
     vertical-align:middle;
     text-align: center;
-    font-size: 50px;
+    font-size: 55px;
     line-height: 100px;
 }
 
@@ -51,6 +67,10 @@ body
     text-align: center;
     font-size: 50px;
     line-height: 140px;
+}
+
+.divLogo, .confirmationHeader, .rushLogo {
+    font-family: 'Average', serif;
 }
 
 .form-signin, .form-signup {
@@ -81,6 +101,7 @@ body
     font-size: 16px;
     text-align:justify;
     text-justify:inter-word;
+    font-family:allerLight;
 }
 
 .confirmationSubHeader {
@@ -90,6 +111,7 @@ body
 }
 
 .form-signin input, .form-signup input {
+    font-family: allerLight;
     font-size: 16px;
     padding: 7px 9px;
     box-sizing: border-box;
@@ -130,6 +152,7 @@ body
 }
 
 .form-signin-buttons {
+    font-family:allerLight;
     width: 42%;
     display: inline-block;
     padding: 4px 12px;
@@ -167,6 +190,8 @@ body
 }
 
 .form-signin-contents select {
+    font-family:allerLight;
+    font-size: 15px;
     padding-left: 10px;
     -webkit-appearance:;;
 }
@@ -196,7 +221,7 @@ body
 
 
 .form-su-name {
-    height: 40px;
+    height: 35px;
 }
 
 .form-su-fullWidth {
@@ -205,22 +230,23 @@ body
 
 .form-su-datePicker {
     width: 62%;
+    height:35px;
     margin-right: 10px;
 }
 
 .form-su-gender {
     width: 34%;
-    height: 38px;
+    height: 35px;
 }
 
 .form-su-org {
     width: 62%;
-    height: 38px;
+    height: 35px;
     margin-right: 10px;
 }
 
 .form-su-initYear {
-    height: 40px;
+    height: 35px;
     width: 34%;
 }
 
@@ -228,10 +254,35 @@ body
     width: 40%;
 }
 
-.form-su-dropHeight {
+.form-su-state {
+    width: 30%;
+    height: 35px;
+    margin-right: 10px;
+}
 
+.form-su-university {
+    height: 35px;
+    width: 66%;
+}
+
+.form-su-email {
+    height: 35px;
+    width: 100%;
+}
+
+.form-su-password {
+    height: 35px;
+    width: 48%;
+}
+
+.rightMargin {
+    margin-right: 10px;
 }
 
 input, select, textarea, button{
     font-family:inherit;
 }
+
+
+
+

@@ -23,37 +23,41 @@ $this->breadcrumbs=array(
 	)); ?>
 
 		<div class="divLogo">
-			<h1 class="form-signin-heading text-center" >GreekLink</h1>
+			GreekLink
 		</div>
 
-		<?php echo $form->textField($model,'email', array(
-			'class'=>'input-block-level',
-			'placeholder'=>'Email',
-		)); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<div class="form-signin-contents">
 
-		<?php echo $form->passwordField($model,'password', array(
-			'class'=>'input-block-level',
-			'placeholder'=>'Password',
-		)); ?>
-		<?php echo $form->error($model,'password'); ?>
+			<?php echo $form->textField($model,'email', array(
+				'class'=>'',
+				'placeholder'=>'Email',
+			)); ?>
+			<?php echo $form->error($model,'email'); ?>
 
-		<?php echo CHtml::submitButton('Log in', array(
-			'class'=>'btn btn-large btn-primary btn-block button-padding button-margin',
-		)); ?>
+			<?php echo $form->passwordField($model,'password', array(
+				'class'=>'form-topMargin',
+				'placeholder'=>'Password',
+			)); ?>
+			<?php echo $form->error($model,'password'); ?>
 
-		<?php //echo CHtml::htmlButton('Forgot password?', array(
-			//'class'=>'btn btn-large button-margin button-half',
-		//)); ?>
+			<?php echo CHtml::submitButton('Log in', array(
+				'class'=>'form-signin-login',
+			)); ?>
 
-		<?php //echo CHtml::htmlButton('Sign up', array(
-			//'class'=>'btn btn-large button-margin button-half pull-right',
-			//'submit'=>array('site/signup'),
-		//)); ?>
+			<?php //echo CHtml::htmlButton('Forgot password?', array(
+				//'class'=>'btn btn-large button-margin button-half',
+			//)); ?>
 
-		<?php echo CHtml::link('Forgot password?',array('site/passwordRecovery'),array('class'=>'btn btn-large button-margin button-half')); ?>
+			<?php //echo CHtml::htmlButton('Sign up', array(
+				//'class'=>'btn btn-large button-margin button-half pull-right',
+				//'submit'=>array('site/signup'),
+			//)); ?>
 
-		<?php echo CHtml::link('Sign up',array('users/create'),array('class'=>'btn btn-large button-margin button-half pull-right')); ?>
+			<?php echo CHtml::link('Forgot password?',array('site/passwordRecovery'),array('class'=>'form-signin-buttons')); ?>
+
+			<?php echo CHtml::link('Sign up',array('users/create'),array('class'=>'form-signin-buttons')); ?>
+
+		</div>
 
 	<?php $this->endWidget(); ?>
 </div>

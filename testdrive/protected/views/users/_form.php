@@ -52,10 +52,11 @@
 			?>
 			<?php echo $form->error($model,'gender'); ?>
 
-			<?php echo CHtml::dropDownList('organization_id','organization_id', array(), 
+			<?php echo CHtml::activeDropDownList($model, 'organization', array(), 
 				array(
-					'empty'=>Yii::t('fim','Select Organization'),
-					'class'=>'form-topMargin form-su-org'
+					'prompt'=>'Select Organization',
+					'class'=>'form-topMargin form-su-org',
+					'id'=>'organization_id'
 				)); ?>
 			<?php echo $form->error($model,'organization'); ?>
 
@@ -83,10 +84,11 @@
 			?>
 			<?php echo $form->error($model,'state'); ?>
 
-			<?php echo CHtml::dropDownList('university_id','university_id', array(), 
+			<?php echo CHtml::activeDropDownList($model,'university', array(), 
 				array(
-					'empty'=>Yii::t('fim','Select University'),
+					'empty'=>'Select University',
 					'class'=>'form-topMargin',
+					'id'=>'university_id'
 				)
 			); ?>
 			<?php echo $form->error($model,'university'); ?>

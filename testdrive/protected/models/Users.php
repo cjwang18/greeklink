@@ -51,6 +51,7 @@ class Users extends CActiveRecord
 		return array(
 			array('name, organization, state, university, birthday, gender, initiationYear, email, repeatEmail, password, repeatPassword', 'required'),
 			array('name, organization, university, email, password', 'length', 'max'=>128),
+			array('organization, university', 'safe'),
 			array('state, gender', 'length', 'max'=>2),
 			array('initiationYear', 'length', 'max'=>4),
 			array('initiationYear', 'match', 'pattern'=>'/^[0-9]+$/', 'message'=>'Must be a valid year.'),

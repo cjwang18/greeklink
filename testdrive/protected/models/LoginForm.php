@@ -49,17 +49,14 @@ class LoginForm extends CFormModel
 		if(!$this->hasErrors())
 		{
 			$this->_identity=new UserIdentity($this->email,$this->password);
-			if(!$this->_identity->authenticate()) {
-				//$this->addError('password','Incorrect email or password.');
-				switch ($this->_identity->errorCode) {
-					case UserIdentity::ERROR_USERNAME_INVALID:
-						$this->addError('email','Email address is incorrect.');
-						break;
-					default:
-						$this->addError('password','Password is incorrect.');
-						break;
-				}
-			}
+			if ($this->_identity->authenticate() == 1)
+				$this->addError('email','Email address is incorrect.');
+			elseif ($this->_identity->authenticate() == 2)
+				$this->addError('password','Password is incorrect.');
+			elseif ($this->_identity->authenticate() == 3)
+				$this->addError('email','Account not approved yet.');
+			elseif ($this->_identity->authenticate() == 4)
+				$this->addError('email','Sorry, your account has not been approved.');
 		}
 	}
 

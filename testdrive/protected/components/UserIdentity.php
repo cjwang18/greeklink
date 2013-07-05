@@ -7,6 +7,8 @@
  */
 class UserIdentity extends CUserIdentity
 {
+	const ERROR_USER_ACCOUNT_PENDING = 3;
+	const ERROR_USER_ACCOUNT_DENIED = 4;
 	private $_id;
 
 	/**
@@ -24,6 +26,10 @@ class UserIdentity extends CUserIdentity
 
 		if($user===null)
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
+		elseif($user->status=='_')
+			$this->errorCode=self::ERROR_USER_ACCOUNT_PENDING;
+		elseif($user->status=='-')
+			$this->errorCode=self::ERROR_USER_ACCOUNT_DENIED;
 		elseif(!$user->validatePassword($this->password))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else {
@@ -31,7 +37,10 @@ class UserIdentity extends CUserIdentity
 			$this->_id=$user['userID'];
 			$this->setState('name', $user['name']);
 		}
-		return !$this->errorCode;
+
+		// Change return statement to return the value not just a pass condition
+		// was: return !$this->errorCode;
+		return $this->errorCode;
 	}
 
 	public function getId() {

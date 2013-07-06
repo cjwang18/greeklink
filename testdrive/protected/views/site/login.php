@@ -32,13 +32,12 @@ $this->breadcrumbs=array(
 				'class'=>'',
 				'placeholder'=>'Email',
 			)); ?>
-			<?php echo $form->error($model,'email'); ?>
+			
 
 			<?php echo $form->passwordField($model,'password', array(
 				'class'=>'form-topMargin',
 				'placeholder'=>'Password',
 			)); ?>
-			<?php echo $form->error($model,'password'); ?>
 
 			<?php echo CHtml::submitButton('Log in', array(
 				'class'=>'form-signin-login',
@@ -57,6 +56,9 @@ $this->breadcrumbs=array(
 
 			<?php echo CHtml::link('Sign up',array('users/create'),array('class'=>'form-signin-buttons')); ?>
 
+
+			<?php echo $form->error($model,'email'); ?>
+			<?php echo $form->error($model,'password'); ?>
 		</div>
 
 	<?php $this->endWidget(); ?>

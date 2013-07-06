@@ -17,7 +17,7 @@
 		<div class="rushLogo">Rush</div>
 
 		<div class="form-signin-contents">
-			<?php //echo $form->errorSummary($model); ?>
+			
 
 			<?php echo $form->textField($model,'name',array(
 				'size'=>60,
@@ -25,13 +25,13 @@
 				'class'=>'form-su-fullWidth form-su-name',
 				'placeholder'=>'Name',
 			)); ?>
-			<?php echo $form->error($model,'name'); ?>
+			<?php //echo $form->error($model,'name'); ?>
 
 			<?php echo $form->dateField($model,'birthday', array(
 				'class'=>'form-topMargin form-su-datePicker',
 				'placeholder'=>'Birthday',
 			)); ?>
-			<?php echo $form->error($model,'birthday'); ?>
+			<?php //echo $form->error($model,'birthday'); ?>
 
 			<?php 
 				$genders = array(
@@ -50,7 +50,7 @@
 					)
 				);
 			?>
-			<?php echo $form->error($model,'gender'); ?>
+			<?php //echo $form->error($model,'gender'); ?>
 
 			<?php echo CHtml::activeDropDownList($model, 'organization', array(), 
 				array(
@@ -58,7 +58,7 @@
 					'class'=>'form-topMargin form-su-org',
 					'id'=>'organization_id'
 				)); ?>
-			<?php echo $form->error($model,'organization'); ?>
+			<?php //echo $form->error($model,'organization'); ?>
 
 			<?php echo $form->textField($model,'initiationYear',array(
 				'size'=>4,
@@ -66,7 +66,7 @@
 				'class'=>'form-topMargin form-su-initYear',
 				'placeholder'=>'Initiation Year'
 			)); ?>
-			<?php echo $form->error($model,'initiationYear'); ?>
+			<?php //echo $form->error($model,'initiationYear'); ?>
 
 			<?php 
 				$states = CHtml::listData(States::model()->findAll(), 'stateID', 'stateAbbr');
@@ -82,7 +82,7 @@
 						)					
 					);
 			?>
-			<?php echo $form->error($model,'state'); ?>
+			<?php //echo $form->error($model,'state'); ?>
 
 			<?php echo CHtml::activeDropDownList($model,'university', array(), 
 				array(
@@ -91,7 +91,7 @@
 					'id'=>'university_id'
 				)
 			); ?>
-			<?php echo $form->error($model,'university'); ?>
+			<?php //echo $form->error($model,'university'); ?>
 
 			<?php echo $form->textField($model,'email',
 				array(
@@ -109,7 +109,7 @@
 					'placeholder'=>'Confirm Email',
 				)
 			); ?>
-			<?php echo $form->error($model,'email'); ?>
+			<?php //echo $form->error($model,'email'); ?>
 
 			<?php echo $form->passwordField($model,'password',
 				array(
@@ -127,7 +127,7 @@
 					'placeholder'=>'Confirm Password',
 				)
 			); ?>
-			<?php echo $form->error($model,'password'); ?>
+			<?php //echo $form->error($model,'password'); ?>
 
 			<?php //echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 
@@ -140,3 +140,16 @@
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+
+	<?php echo $form->errorSummary($model); ?>
+
+	<?php //echo $form->error($model,'name'); ?>
+	<?php //echo $form->error($model,'birthday'); ?>
+	<?php //echo $form->error($model,'gender'); ?>
+	<?php //echo $form->error($model,'organization'); ?>
+	<?php //echo $form->error($model,'initiationYear'); ?>
+	<?php //echo $form->error($model,'state'); ?>
+	<?php //echo $form->error($model,'university'); ?>
+	<?php //echo $form->error($model,'email'); ?>
+	<?php //echo $form->error($model,'password'); ?>

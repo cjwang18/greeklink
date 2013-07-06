@@ -229,25 +229,25 @@ body
 }
 
 .form-su-datePicker {
-    width: 62%;
+    width: 60%;
     height:35px;
     margin-right: 10px;
 }
 
 .form-su-gender {
-    width: 34%;
+    width: 36%;
     height: 35px;
 }
 
 .form-su-org {
-    width: 62%;
+    width: 60%;
     height: 35px;
     margin-right: 10px;
 }
 
 .form-su-initYear {
     height: 35px;
-    width: 34%;
+    width: 36%;
 }
 
 .form-su-halfWidth {
@@ -255,14 +255,14 @@ body
 }
 
 .form-su-state {
-    width: 30%;
+    width: 32%;
     height: 35px;
     margin-right: 10px;
 }
 
 .form-su-university {
     height: 35px;
-    width: 66%;
+    width: 64%;
 }
 
 .form-su-email {
@@ -283,6 +283,49 @@ input, select, textarea, button{
     font-family:inherit;
 }
 
+.errorSummary {
+    background-color: rgba(225, 225, 225, 1.0);
+    -webkit-border-radius: 5px;
+       -moz-border-radius: 5px;
+            border-radius: 5px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    border: 1px solid #bfc9c2;
+    position: absolute;
+    padding: 15px 15px;
+    top: 50%;
+    left: 50%;
+    margin-top: -150px;
+    margin-left: 250px;
+    width: 220px;
+    height: 300px;
+    font-family:allerLight;
+    color: #222;
+}
+.errorSummary:after, .errorSummary:before {
+    right: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
 
+.errrorSummary:after {
+    border-color: rgba(225, 225, 225, 0);
+    border-right-color: #696969;
+    border-width: 30px;
+    top: 50%;
+    margin-top: -30px;
+}
+.errorSummary:before {
+    border-color: rgba(225, 225, 225, 0);
+    border-right-color: #dfdfdf;
+    border-width: 31px;
+    top: 50%;
+    margin-top: -31px;
+}
 
 

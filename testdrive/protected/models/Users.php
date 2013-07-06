@@ -131,14 +131,22 @@ class Users extends CActiveRecord
         $hasher = new PasswordHash(Yii::app()->params['phpass']['iteration_count_log2'], Yii::app()->params['phpass']['portable_hashes']);
         return $hasher->checkPassword($password, $this->password);
     }
- 
-    public function beforeSave()
-    {
-        // Replace the raw password with the hashed one
-        if (isset($this->password)) {
-            $hasher = new PasswordHash(Yii::app()->params['phpass']['iteration_count_log2'], Yii::app()->params['phpass']['portable_hashes']);
-            $this->password = $hasher->HashPassword($this->password);
-        }
-        return parent::beforeSave();
-    }
+
+	public function beforeSave()
+	{
+		$hasher = new PasswordHash(Yii::app()->params['phpass']['iteration_count_log2'], Yii::app()->params['phpass']['portable_hashes']);
+
+		// Replace the raw password with the hashed one
+		if (isset($this->password)) {
+			$this->password = $hasher->HashPassword($this->password);
+		}
+
+		// Generate the activation hash
+		$this->activationHash = $hasher->HashPassword(mt_rand(10000,99999).time().$this->email);
+
+		// Set the status to pending
+		$this->status = '_';
+
+		return parent::beforeSave();
+	}
 }

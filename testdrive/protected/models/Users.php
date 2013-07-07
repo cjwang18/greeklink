@@ -51,7 +51,7 @@ class Users extends CActiveRecord
 		return array(
 			array('name, organization, state, university, birthday, gender, initiationYear, email, repeatEmail, password, repeatPassword', 'required'),
 			array('name, organization, university, email, password', 'length', 'max'=>128),
-			array('organization, university', 'safe'),
+			array('organization, university, status', 'safe'),
 			array('state, gender', 'length', 'max'=>2),
 			array('initiationYear', 'length', 'max'=>4),
 			array('initiationYear', 'match', 'pattern'=>'/^[0-9]+$/', 'message'=>'Must be a valid year.'),
@@ -72,9 +72,9 @@ class Users extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'organization' => array(self::BELONGS_TO, 'Organizations', 'organization'),
-			'state' => array(self::BELONGS_TO, 'States', 'state'),
-			'university' => array(self::BELONGS_TO, 'Universities', 'university'),
+			'organizationRel' => array(self::BELONGS_TO, 'Organizations', 'organization'),
+			'stateRel' => array(self::BELONGS_TO, 'States', 'state'),
+			'universityRel' => array(self::BELONGS_TO, 'Universities', 'university'),
 		);
 	}
 
@@ -94,6 +94,7 @@ class Users extends CActiveRecord
 			'initiationYear' => 'Initiation Year',
 			'email' => 'Email',
 			'password' => 'Password',
+			'status' => 'Verification Status',
 		);
 	}
 
@@ -141,12 +142,26 @@ class Users extends CActiveRecord
 			$this->password = $hasher->HashPassword($this->password);
 		}
 
-		// Generate the activation hash
-		$this->activationHash = $hasher->HashPassword(mt_rand(10000,99999).time().$this->email);
+		// Generate the verification hash
+		$this->verificationHash = $hasher->HashPassword(mt_rand(10000,99999).time().$this->email);
 
 		// Set the status to pending
 		$this->status = '_';
 
 		return parent::beforeSave();
+	}
+
+	public function approveUser()
+	{
+		$this->status = '+';
+		$this->dateVerified = new CDbExpression('NOW()');
+		$this->saveAttributes(array('status', 'dateVerified'));
+	}
+
+	public function denyUser()
+	{
+		$this->status = '-';
+		$this->dateVerified = new CDbExpression('NOW()');
+		$this->saveAttributes(array('status', 'dateVerified'));
 	}
 }

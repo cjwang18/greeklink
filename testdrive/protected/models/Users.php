@@ -57,6 +57,7 @@ class Users extends CActiveRecord
 			array('initiationYear', 'match', 'pattern'=>'/^[0-9]+$/', 'message'=>'Must be a valid year.'),
 			array('email, repeatEmail', 'email', 'pattern'=>'/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.edu)$/', 'message'=>'Must be a .edu email address.'),
 			array('email', 'compare', 'compareAttribute'=>'repeatEmail'),
+			array('email', 'unique'),
 			array('password', 'compare', 'compareAttribute'=>'repeatPassword'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

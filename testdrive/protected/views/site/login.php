@@ -10,7 +10,7 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<div class="divFormCenter">
+<div class="divFormCenter loginDiv">
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'login-form',
 		'enableClientValidation'=>true,
@@ -57,9 +57,12 @@ $this->breadcrumbs=array(
 			<?php echo CHtml::link('Sign up',array('users/create'),array('class'=>'form-signin-buttons')); ?>
 
 
-			<?php echo $form->error($model,'email'); ?>
-			<?php echo $form->error($model,'password'); ?>
+			<?php //echo $form->error($model,'email'); ?>
+			<?php //echo $form->error($model,'password'); ?>
 		</div>
-
 	<?php $this->endWidget(); ?>
+</div>
+
+<div class="loginErrorSummary">
+	<?php echo $form->errorSummary($model); ?>
 </div>

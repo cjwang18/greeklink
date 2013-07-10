@@ -33,6 +33,11 @@ body
     height: 500px;
 }
 
+.loginDiv {
+    height: 400px;
+    margin-top: -200px;
+}
+
 .suFormCenter{
     text-align: center;
     position: absolute;
@@ -326,6 +331,28 @@ input, select, textarea, button{
     border-width: 31px;
     top: 50%;
     margin-top: -31px;
+}
+
+.errorSummary p {
+    font-family: 'Average';
+    font-size: 19px;
+    margin-bottom: 10px;
+    margin-left: 15px;
+}
+
+.errorSummary ul li{
+    font-size: 15px;
+    margin-left: 15px;
+    margin-bottom: 1px;
+    list-style-type: circle;
+    color: #FF3333;
+}
+
+.loginErrorSummary .errorSummary{
+    margin-top: -75px;
+    margin-left: 250px;
+    width: 220px;
+    height: 100px;
 }
 
 

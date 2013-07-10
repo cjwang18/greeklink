@@ -1,0 +1,74 @@
+Date: Wed, 10 Jul 2013 04:13:26 +0200
+Return-Path: <chunjiwa@usc.edu>
+From: CJ <chunjiwa@usc.edu>
+Message-ID: <cdd4c9ac64b4f93e51c3c8dfae52303c@127.0.0.1>
+X-Priority: 3
+X-Mailer: PHPMailer 5.2.6 (https://github.com/PHPMailer/PHPMailer/)
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="b1_cdd4c9ac64b4f93e51c3c8dfae52303c"
+Content-Transfer-Encoding: 8bit
+To: c707h3j@gmail.com
+Subject: testing
+
+--b1_cdd4c9ac64b4f93e51c3c8dfae52303c
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+GreekLink            
+		
+		
+            
+            	Contact form            
+		
+		
+            
+				Message from CJ: testing
+
+You may change the content of this page by modifying the following two files:
+
+	View file: C:\Program Files (x86)\EasyPHP-DevServer-13.1VC11\data\localweb\projects\greeklink\testdrive\protected\views\mail\contact.php
+	Layout file: C:\Program Files (x86)\EasyPHP-DevServer-13.1VC11\data\localweb\projects\greeklink\testdrive\protected\views\layouts\mail.php
+
+
+--b1_cdd4c9ac64b4f93e51c3c8dfae52303c
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+<head>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+</head>
+<table cellspacing="0" cellpadding="10" style="color:#666;font:13px Arial;line-height:1.4em;width:100%;">
+	<tbody>
+		<tr>
+            <td style="color:#4D90FE;font-size:22px;border-bottom: 2px solid #4D90FE;">
+				GreekLink            </td>
+		</tr>
+		<tr>
+            <td style="color:#777;font-size:16px;padding-top:5px;">
+            	Contact form            </td>
+		</tr>
+		<tr>
+            <td>
+				<p>Message from CJ: testing</p>
+
+<p>You may change the content of this page by modifying the following two files:</p>
+<ul>
+	<li>View file: <tt>C:\Program Files (x86)\EasyPHP-DevServer-13.1VC11\data\localweb\projects\greeklink\testdrive\protected\views\mail\contact.php</tt></li>
+	<li>Layout file: <tt>C:\Program Files (x86)\EasyPHP-DevServer-13.1VC11\data\localweb\projects\greeklink\testdrive\protected\views\layouts\mail.php</tt></li>
+</ul>            </td>
+		</tr>
+		<tr>
+            <td style="padding:15px 20px;text-align:right;padding-top:5px;border-top:solid 1px #dfdfdf">
+				<a href="http://www.yiiframework.com/"><img alt="yiiframework.com" src="yii.png" /></a>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</body>
+</html>
+
+
+
+--b1_cdd4c9ac64b4f93e51c3c8dfae52303c--

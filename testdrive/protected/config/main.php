@@ -17,6 +17,7 @@ return array(
 		'application.models.*',
 		'application.components.*',
 		'application.extensions.PasswordHash',
+		'application.extensions.YiiMailer.YiiMailer',
 	),
 
 	'modules'=>array(

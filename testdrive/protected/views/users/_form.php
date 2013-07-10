@@ -52,7 +52,12 @@
 			?>
 			<?php //echo $form->error($model,'gender'); ?>
 
-			<?php echo CHtml::activeDropDownList($model, 'organization', array(), 
+			<?php
+				$orgArr = array();
+				if (isset($_POST['Users']['gender']))
+					$orgArr = $this->getOrganizationsList($_POST['Users']['gender']);
+
+				echo CHtml::activeDropDownList($model, 'organization', $orgArr,
 				array(
 					'prompt'=>'Select Organization',
 					'class'=>'form-topMargin form-su-org',
@@ -84,7 +89,12 @@
 			?>
 			<?php //echo $form->error($model,'state'); ?>
 
-			<?php echo CHtml::activeDropDownList($model,'university', array(), 
+			<?php
+				$uniArr = array();
+				if (isset($_POST['Users']['state']))
+					$uniArr = $this->getUniversitiesList($_POST['Users']['state']);
+
+				echo CHtml::activeDropDownList($model,'university', $uniArr, 
 				array(
 					'empty'=>'Select University',
 					'class'=>'form-topMargin form-su-university',

@@ -175,13 +175,17 @@ class UsersController extends Controller
 		}
 	}
 
-	public function actionLoadOrganizations() {
-		if ($_POST['Users']['gender'] == 'm') {
+	public function getOrganizationsList($gender) {
+		if ($gender == 'm') {
 			$data = Organizations::model()->findAll('type=:type', array(':type'=> 'F'));
-		} else if ($_POST['Users']['gender'] == 'f') {
+		} else if ($gender == 'f') {
 			$data = Organizations::model()->findAll('type=:type', array(':type'=> 'S'));
 		}
-		$data = CHtml::listData($data, 'orgID', 'name');
+		return CHtml::listData($data, 'orgID', 'name');
+	}
+
+	public function actionLoadOrganizations() {
+		$data = $this->getOrganizationsList($_POST['Users']['gender']);
 
 		echo "<option value=''>Select Organization</option>";
 		foreach ($data as $value => $name) {
@@ -189,9 +193,13 @@ class UsersController extends Controller
 		}
 	}
 
+	public function getUniversitiesList($state) {
+		$data = Universities::model()->findAll('state=:state', array(':state'=>(int) $state));
+		return CHtml::listData($data, 'universityID', 'name');
+	}
+
 	public function actionLoadUniversities() {
-		$data = Universities::model()->findAll('state=:state', array(':state'=>(int) $_POST['Users']['state']));
-		$data = CHtml::listData($data, 'universityID', 'name');
+		$data = $this->getUniversitiesList($_POST['Users']['state']);
 
 		echo "<option value=''>Select University</option>";
 		foreach ($data as $value => $name) {

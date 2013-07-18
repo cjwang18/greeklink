@@ -64,6 +64,13 @@ class VerificationController extends Controller
 	{
 		// Skipping sanity checks since actionIndex() should have handled potential errors
 		$id = Yii::app()->getRequest()->getQuery('id');
+
+		// Create a profile for the user
+		$profile = new Profile();
+		$profile->userID = $id;
+		$profile->save();
+
+		// Approve user's account
 		$user = Users::model()->findByPk($id);
 		$user->approveUser();
 		$this->redirect(array('confirmation', 'id'=>$id, 'status'=>'+'));

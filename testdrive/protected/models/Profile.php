@@ -66,7 +66,6 @@ class Profile extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('userID, profilePic, chapter, intramural, currentCity, hometown, relationship, interests, music, movies, tv, books, games, phone, facebook, twitter, website, graduationMonth, graduationYear, gpa, honors, relevantCoursework', 'required'),
 			array('graduationMonth', 'numerical', 'integerOnly'=>true),
 			array('userID', 'length', 'max'=>11),
 			array('profilePic, chapter', 'length', 'max'=>128),
@@ -75,6 +74,7 @@ class Profile extends CActiveRecord
 			array('phone', 'length', 'max'=>10),
 			array('graduationYear', 'length', 'max'=>4),
 			array('gpa', 'length', 'max'=>3),
+			array('userID, profilePic, intramural, interests, music, movies, tv, books, games, honors, relevantCoursework', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('profileID, userID, profilePic, chapter, intramural, currentCity, hometown, relationship, interests, music, movies, tv, books, games, phone, facebook, twitter, website, graduationMonth, graduationYear, gpa, honors, relevantCoursework', 'safe', 'on'=>'search'),
@@ -108,16 +108,16 @@ class Profile extends CActiveRecord
 		return array(
 			'profileID' => 'Profile',
 			'userID' => 'User',
-			'profilePic' => 'Profile Pic',
+			'profilePic' => 'Profile Picture',
 			'chapter' => 'Chapter',
-			'intramural' => 'Intramural',
+			'intramural' => 'Intramural Involvement',
 			'currentCity' => 'Current City',
 			'hometown' => 'Hometown',
 			'relationship' => 'Relationship',
 			'interests' => 'Interests',
 			'music' => 'Music',
 			'movies' => 'Movies',
-			'tv' => 'Tv',
+			'tv' => 'TV',
 			'books' => 'Books',
 			'games' => 'Games',
 			'phone' => 'Phone',
@@ -126,7 +126,7 @@ class Profile extends CActiveRecord
 			'website' => 'Website',
 			'graduationMonth' => 'Graduation Month',
 			'graduationYear' => 'Graduation Year',
-			'gpa' => 'Gpa',
+			'gpa' => 'GPA',
 			'honors' => 'Honors',
 			'relevantCoursework' => 'Relevant Coursework',
 		);

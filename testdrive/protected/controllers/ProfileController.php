@@ -27,17 +27,9 @@ class ProfileController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+			array('allow', // allow authenticated user to perform 'update' and 'view' actions
+				'actions'=>array('update','view'),
 				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -51,9 +43,16 @@ class ProfileController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+		$model = $this->loadModel($id);
+		// User can only view his/her own profile
+		// TODO: allow user's links to view profile
+		if ($model->userID == Yii::app()->user->id) {
+			$this->render('view',array(
+				'model'=>$model,
+			));
+		} else {
+			throw new CHttpException(403,'Invalid request. You are not allowed to view this profile.');
+		}
 	}
 
 	/**
@@ -88,19 +87,26 @@ class ProfileController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		// User can only update (edit) his/her own profile
+		if ($model->userID == Yii::app()->user->id) {
 
-		if(isset($_POST['Profile']))
-		{
-			$model->attributes=$_POST['Profile'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->profileID));
+			// Uncomment the following line if AJAX validation is needed
+			// $this->performAjaxValidation($model);
+
+			if(isset($_POST['Profile']))
+			{
+				$model->attributes=$_POST['Profile'];
+				if($model->save())
+					$this->redirect(array('view','id'=>$model->profileID));
+			}
+
+			$this->render('update',array(
+				'model'=>$model,
+			));
+
+		} else {
+			throw new CHttpException(403,'Invalid request. You are not allowed to edit this profile.');
 		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
 	}
 
 	/**

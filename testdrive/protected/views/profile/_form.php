@@ -131,7 +131,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'gpa'); ?>
-		<?php echo $form->textField($model,'gpa',array('size'=>3,'maxlength'=>3)); ?>
+		<?php echo $form->textField($model,'gpa',array('size'=>3,'maxlength'=>5)); ?>
 		<?php echo $form->error($model,'gpa'); ?>
 	</div>
 

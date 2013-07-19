@@ -73,7 +73,7 @@ class Profile extends CActiveRecord
 			array('relationship', 'length', 'max'=>16),
 			array('phone', 'length', 'max'=>10),
 			array('graduationYear', 'length', 'max'=>4),
-			array('gpa', 'length', 'max'=>3),
+			array('gpa', 'length', 'max'=>5),
 			array('userID, profilePic, intramural, interests, music, movies, tv, books, games, honors, relevantCoursework', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

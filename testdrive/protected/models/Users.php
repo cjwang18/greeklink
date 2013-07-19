@@ -76,6 +76,13 @@ class Users extends CActiveRecord
 			'organizationRel' => array(self::BELONGS_TO, 'Organizations', 'organization'),
 			'stateRel' => array(self::BELONGS_TO, 'States', 'state'),
 			'universityRel' => array(self::BELONGS_TO, 'Universities', 'university'),
+			'comments' => array(self::HAS_MANY, 'Comments', 'author'),
+			'linkOwner' => array(self::HAS_MANY, 'Links', 'owner'), // owner is the user
+			'links' => array(self::HAS_MANY, 'Links', 'link'), // the user's friend (link)
+			'posts' => array(self::HAS_MANY, 'Posts', 'author'),
+			'posts1' => array(self::HAS_MANY, 'Posts', 'owner'), // the user whose wall the post belongs to
+			'profile' => array(self::HAS_ONE, 'Profiles', 'userID'),
+			'votes' => array(self::HAS_MANY, 'Votes', 'userID'),
 		);
 	}
 

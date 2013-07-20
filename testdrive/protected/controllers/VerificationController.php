@@ -69,10 +69,11 @@ class VerificationController extends Controller
 		$profile = new Profile();
 		$profile->userID = $id;
 		$profile->save();
+		$pid = $profile->profileID;
 
 		// Approve user's account
 		$user = Users::model()->findByPk($id);
-		$user->approveUser();
+		$user->approveUser($pid);
 		$this->redirect(array('confirmation', 'id'=>$id, 'status'=>'+'));
 	}
 

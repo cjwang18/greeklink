@@ -35,6 +35,7 @@ class UserIdentity extends CUserIdentity
 		else {
 			$this->errorCode=self::ERROR_NONE;
 			$this->_id=$user['userID'];
+			$this->setState('pid', $user['profileID']);
 			$this->setState('name', $user['name']);
 		}
 

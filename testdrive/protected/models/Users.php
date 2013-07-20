@@ -159,11 +159,12 @@ class Users extends CActiveRecord
 		return parent::beforeSave();
 	}
 
-	public function approveUser()
+	public function approveUser($pid)
 	{
 		$this->status = '+';
 		$this->dateVerified = new CDbExpression('NOW()');
-		$this->saveAttributes(array('status', 'dateVerified'));
+		$this->profileID = $pid;
+		$this->saveAttributes(array('status', 'dateVerified', 'profileID'));
 	}
 
 	public function denyUser()

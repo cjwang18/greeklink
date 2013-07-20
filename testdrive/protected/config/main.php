@@ -18,6 +18,7 @@ return array(
 		'application.components.*',
 		'application.extensions.PasswordHash',
 		'application.extensions.YiiMailer.YiiMailer',
+		'application.modules.profile.models.*',
 	),
 
 	'modules'=>array(
@@ -28,6 +29,9 @@ return array(
 			'password'=>'gl',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
 			'ipFilters'=>array('127.0.0.1','192.168.1.137','108.185.97.209','::1'),
+		),
+		'profile'=>array(
+			'defaultController'=>'profile',
 		),
 		
 	),

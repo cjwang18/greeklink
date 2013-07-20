@@ -1,6 +1,6 @@
 <?php
 
-class ProfileController extends Controller
+class ActivityController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -27,9 +27,17 @@ class ProfileController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow', // allow authenticated user to perform 'update' and 'view' actions
-				'actions'=>array('update','view'),
+			array('allow',  // allow all users to perform 'index' and 'view' actions
+				'actions'=>array('index','view'),
+				'users'=>array('*'),
+			),
+			array('allow', // allow authenticated user to perform 'create' and 'update' actions
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
+			),
+			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+				'actions'=>array('admin','delete'),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -43,16 +51,9 @@ class ProfileController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$model = $this->loadModel($id);
-		// User can only view his/her own profile
-		// TODO: allow user's links to view profile
-		if ($model->userID == Yii::app()->user->id) {
-			$this->render('view',array(
-				'model'=>$model,
-			));
-		} else {
-			throw new CHttpException(403,'Invalid request. You are not allowed to view this profile.');
-		}
+		$this->render('view',array(
+			'model'=>$this->loadModel($id),
+		));
 	}
 
 	/**
@@ -61,16 +62,16 @@ class ProfileController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Profile;
+		$model=new Activity;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Profile']))
+		if(isset($_POST['Activity']))
 		{
-			$model->attributes=$_POST['Profile'];
+			$model->attributes=$_POST['Activity'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->profileID));
+				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
@@ -87,26 +88,19 @@ class ProfileController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		// User can only update (edit) his/her own profile
-		if ($model->userID == Yii::app()->user->id) {
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
 
-			// Uncomment the following line if AJAX validation is needed
-			// $this->performAjaxValidation($model);
-
-			if(isset($_POST['Profile']))
-			{
-				$model->attributes=$_POST['Profile'];
-				if($model->save())
-					$this->redirect(array('view','id'=>$model->profileID));
-			}
-
-			$this->render('update',array(
-				'model'=>$model,
-			));
-
-		} else {
-			throw new CHttpException(403,'Invalid request. You are not allowed to edit this profile.');
+		if(isset($_POST['Activity']))
+		{
+			$model->attributes=$_POST['Activity'];
+			if($model->save())
+				$this->redirect(array('view','id'=>$model->id));
 		}
+
+		$this->render('update',array(
+			'model'=>$model,
+		));
 	}
 
 	/**
@@ -128,7 +122,7 @@ class ProfileController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Profile');
+		$dataProvider=new CActiveDataProvider('Activity');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -139,10 +133,10 @@ class ProfileController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Profile('search');
+		$model=new Activity('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Profile']))
-			$model->attributes=$_GET['Profile'];
+		if(isset($_GET['Activity']))
+			$model->attributes=$_GET['Activity'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -153,12 +147,12 @@ class ProfileController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Profile the loaded model
+	 * @return Activity the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Profile::model()->findByPk($id);
+		$model=Activity::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -166,11 +160,11 @@ class ProfileController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Profile $model the model to be validated
+	 * @param Activity $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='profile-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='activity-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

@@ -44,11 +44,12 @@ class Position extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('profileID, title, description, beginSemester, beginYear, endSemester, endYear', 'required'),
+			//array('profileID, title, description, beginSemester, beginYear, endSemester, endYear', 'required'),
 			array('profileID', 'length', 'max'=>10),
 			array('title', 'length', 'max'=>128),
 			array('beginSemester, endSemester', 'length', 'max'=>8),
 			array('beginYear, endYear', 'length', 'max'=>4),
+			array('description', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('ID, profileID, title, description, beginSemester, beginYear, endSemester, endYear', 'safe', 'on'=>'search'),
@@ -63,7 +64,7 @@ class Position extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'profile' => array(self::BELONGS_TO, 'Profiles', 'profileID'),
+			'profile' => array(self::BELONGS_TO, 'Profile', 'profileID'),
 		);
 	}
 
@@ -107,5 +108,13 @@ class Position extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getSemesterOptions() {
+		return array(
+			'Fall' => 'Fall',
+			'Spring' => 'Spring',
+			'Summer' => 'Summer',
+		);
 	}
 }

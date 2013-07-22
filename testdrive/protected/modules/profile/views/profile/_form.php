@@ -11,15 +11,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
 	<?php echo $form->errorSummary($model); ?>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'userID'); ?>
-		<?php echo $form->textField($model,'userID',array('size'=>11,'maxlength'=>11)); ?>
-		<?php echo $form->error($model,'userID'); ?>
-	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'profilePic'); ?>
@@ -119,7 +111,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'graduationMonth'); ?>
-		<?php echo $form->textField($model,'graduationMonth'); ?>
+		<?php echo $form->dropDownList($model, 'graduationMonth', $model->monthOptions, array('prompt' => 'Select Month')); ?>
 		<?php echo $form->error($model,'graduationMonth'); ?>
 	</div>
 

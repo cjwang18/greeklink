@@ -22,7 +22,7 @@
  * @property string $facebook
  * @property string $twitter
  * @property string $website
- * @property integer $graduationMonth
+ * @property string $graduationMonth
  * @property string $graduationYear
  * @property string $gpa
  * @property string $honors
@@ -66,7 +66,7 @@ class Profile extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('graduationMonth', 'numerical', 'integerOnly'=>true),
+			//array('graduationMonth', 'numerical', 'integerOnly'=>true),
 			array('userID', 'length', 'max'=>11),
 			array('profilePic, chapter', 'length', 'max'=>128),
 			array('currentCity, hometown, facebook, twitter, website', 'length', 'max'=>64),
@@ -74,7 +74,7 @@ class Profile extends CActiveRecord
 			array('phone', 'length', 'max'=>10),
 			array('graduationYear', 'length', 'max'=>4),
 			array('gpa', 'length', 'max'=>5),
-			array('userID, profilePic, intramural, interests, music, movies, tv, books, games, honors, relevantCoursework', 'safe'),
+			array('userID, profilePic, intramural, interests, music, movies, tv, books, games, graduationMonth, honors, relevantCoursework', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('profileID, userID, profilePic, chapter, intramural, currentCity, hometown, relationship, interests, music, movies, tv, books, games, phone, facebook, twitter, website, graduationMonth, graduationYear, gpa, honors, relevantCoursework', 'safe', 'on'=>'search'),
@@ -90,13 +90,13 @@ class Profile extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::BELONGS_TO, 'Users', 'userID'),
-			'profilesActivities' => array(self::HAS_MANY, 'ProfilesActivities', 'profileID'),
-			'profilesCommitteeInvolvements' => array(self::HAS_MANY, 'ProfilesCommitteeInvolvement', 'profileID'),
-			'profilesConcentrations' => array(self::HAS_MANY, 'ProfilesConcentrations', 'profileID'),
-			'profilesFraternalFamilies' => array(self::HAS_MANY, 'ProfilesFraternalFamily', 'profileID'),
-			'profilesPositions' => array(self::HAS_MANY, 'ProfilesPositions', 'profileID'),
-			'profilesSkills' => array(self::HAS_MANY, 'ProfilesSkills', 'profileID'),
-			'profilesWorkExperiences' => array(self::HAS_MANY, 'ProfilesWorkExperience', 'profileID'),
+			'profilesActivities' => array(self::HAS_MANY, 'Activity', 'profileID'),
+			'profilesCommitteeInvolvements' => array(self::HAS_MANY, 'CommitteeInvolvement', 'profileID'),
+			'profilesConcentrations' => array(self::HAS_MANY, 'Concentration', 'profileID'),
+			'profilesFraternalFamilies' => array(self::HAS_MANY, 'FraternalFamily', 'profileID'),
+			'profilesPositions' => array(self::HAS_MANY, 'Position', 'profileID'),
+			'profilesSkills' => array(self::HAS_MANY, 'Skill', 'profileID'),
+			'profilesWorkExperiences' => array(self::HAS_MANY, 'WorkExperience', 'profileID'),
 		);
 	}
 
@@ -170,5 +170,22 @@ class Profile extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getMonthOptions() {
+		return array(
+			'January' => 'January',
+			'February' => 'February',
+			'March' => 'March',
+			'April' => 'April',
+			'May' => 'May',
+			'June' => 'June',
+			'July' => 'July',
+			'August' => 'August',
+			'September' => 'September',
+			'October' => 'October',
+			'November' => 'November',
+			'December' => 'December',
+		);
 	}
 }

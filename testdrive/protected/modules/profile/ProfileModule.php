@@ -11,6 +11,7 @@ class ProfileModule extends CWebModule
 		$this->setImport(array(
 			'profile.models.*',
 			'profile.components.*',
+			'application.models.*',
 		));
 	}
 

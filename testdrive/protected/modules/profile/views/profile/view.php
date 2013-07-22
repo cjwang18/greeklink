@@ -18,31 +18,43 @@ $this->menu=array(
 
 <h1>View Profile #<?php echo $model->profileID; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'profileID',
-		'userID',
-		'profilePic',
-		'chapter',
-		'intramural',
-		'currentCity',
-		'hometown',
-		'relationship',
-		'interests',
-		'music',
-		'movies',
-		'tv',
-		'books',
-		'games',
-		'phone',
-		'facebook',
-		'twitter',
-		'website',
-		'graduationMonth',
-		'graduationYear',
-		'gpa',
-		'honors',
-		'relevantCoursework',
-	),
-)); ?>
+<?php
+	// Render the HEADER section of the profile
+	// TODO: need to style (change layout) and insert profile picture
+	$user = Users::model()->findByPk($model->userID);
+	echo $this->renderPartial('_viewHeader', array('userData'=>$user, 'profileData'=>$model));
+?>
+
+<?php echo '<br>' ?>
+
+<?php 
+	echo $this->renderPartial('_view', array('userData'=>$user, 'profileData'=>$model));
+	/*$this->widget('zii.widgets.CDetailView', array(
+		'data'=>$model,
+		'attributes'=>array(
+			'profileID',
+			'userID',
+			'profilePic',
+			'chapter',
+			'intramural',
+			'currentCity',
+			'hometown',
+			'relationship',
+			'interests',
+			'music',
+			'movies',
+			'tv',
+			'books',
+			'games',
+			'phone',
+			'facebook',
+			'twitter',
+			'website',
+			'graduationMonth',
+			'graduationYear',
+			'gpa',
+			'honors',
+			'relevantCoursework',
+		),
+	)); */
+?>

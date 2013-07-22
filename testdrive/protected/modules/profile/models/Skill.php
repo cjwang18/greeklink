@@ -40,9 +40,10 @@ class Skill extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('profileID, category, skills', 'required'),
+			//array('profileID, category, skills', 'required'),
 			array('profileID', 'length', 'max'=>10),
 			array('category', 'length', 'max'=>128),
+			array('skills', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, profileID, category, skills', 'safe', 'on'=>'search'),
@@ -57,7 +58,7 @@ class Skill extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'profile' => array(self::BELONGS_TO, 'Profiles', 'profileID'),
+			'profile' => array(self::BELONGS_TO, 'Profile', 'profileID'),
 		);
 	}
 

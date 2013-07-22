@@ -29,7 +29,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'type'); ?>
-		<?php echo $form->textField($model,'type',array('size'=>8,'maxlength'=>8)); ?>
+		<?php echo $form->dropDownList($model, 'type', $model->typeOptions, array('prompt' => 'Select Type')); ?>
 		<?php echo $form->error($model,'type'); ?>
 	</div>
 

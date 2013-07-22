@@ -35,7 +35,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'beginMonth'); ?>
-		<?php echo $form->textField($model,'beginMonth'); ?>
+		<?php echo $form->dropDownList($model, 'beginMonth', $model->monthOptions, array('prompt' => 'Select Month')); ?>
 		<?php echo $form->error($model,'beginMonth'); ?>
 	</div>
 
@@ -47,7 +47,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'endMonth'); ?>
-		<?php echo $form->textField($model,'endMonth'); ?>
+		<?php echo $form->dropDownList($model, 'endMonth', $model->monthOptions, array('prompt' => 'Select Month')); ?>
 		<?php echo $form->error($model,'endMonth'); ?>
 	</div>
 

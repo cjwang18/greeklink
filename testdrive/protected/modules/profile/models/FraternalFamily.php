@@ -41,7 +41,7 @@ class FraternalFamily extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('profileID, userID, type', 'required'),
+			//array('profileID, userID, type', 'required'),
 			array('profileID, userID', 'length', 'max'=>10),
 			array('type', 'length', 'max'=>8),
 			// The following rule is used by search().
@@ -58,7 +58,7 @@ class FraternalFamily extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'profile' => array(self::BELONGS_TO, 'Profiles', 'profileID'),
+			'profile' => array(self::BELONGS_TO, 'Profile', 'profileID'),
 			'user' => array(self::BELONGS_TO, 'Users', 'userID'),
 		);
 	}
@@ -95,5 +95,12 @@ class FraternalFamily extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getTypeOptions() {
+		return array(
+			'Big' => 'Big',
+			'Little' => 'Little',
+		);
 	}
 }

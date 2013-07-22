@@ -29,7 +29,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'beginSemester'); ?>
-		<?php echo $form->textField($model,'beginSemester',array('size'=>8,'maxlength'=>8)); ?>
+		<?php echo $form->dropDownList($model, 'beginSemester', $model->semesterOptions, array('prompt' => 'Select Semester')); ?>
 		<?php echo $form->error($model,'beginSemester'); ?>
 	</div>
 
@@ -41,7 +41,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'endSemester'); ?>
-		<?php echo $form->textField($model,'endSemester',array('size'=>8,'maxlength'=>8)); ?>
+		<?php echo $form->dropDownList($model, 'endSemester', $model->semesterOptions, array('prompt' => 'Select Semester')); ?>
 		<?php echo $form->error($model,'endSemester'); ?>
 	</div>
 

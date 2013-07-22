@@ -44,11 +44,12 @@ class WorkExperience extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('profileID, name, description, beginMonth, beginYear, endMonth, endYear', 'required'),
-			array('beginMonth, endMonth', 'numerical', 'integerOnly'=>true),
+			//array('profileID, name, description, beginMonth, beginYear, endMonth, endYear', 'required'),
+			//array('beginMonth, endMonth', 'numerical', 'integerOnly'=>true),
 			array('profileID', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>128),
 			array('beginYear, endYear', 'length', 'max'=>4),
+			array('description, beginMonth, endMonth', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('id, profileID, name, description, beginMonth, beginYear, endMonth, endYear', 'safe', 'on'=>'search'),
@@ -63,7 +64,7 @@ class WorkExperience extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'profile' => array(self::BELONGS_TO, 'Profiles', 'profileID'),
+			'profile' => array(self::BELONGS_TO, 'Profile', 'profileID'),
 		);
 	}
 
@@ -107,5 +108,22 @@ class WorkExperience extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getMonthOptions() {
+		return array(
+			'January' => 'January',
+			'February' => 'February',
+			'March' => 'March',
+			'April' => 'April',
+			'May' => 'May',
+			'June' => 'June',
+			'July' => 'July',
+			'August' => 'August',
+			'September' => 'September',
+			'October' => 'October',
+			'November' => 'November',
+			'December' => 'December',
+		);
 	}
 }

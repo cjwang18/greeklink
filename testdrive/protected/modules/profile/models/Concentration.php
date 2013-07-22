@@ -43,7 +43,7 @@ class Concentration extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('profileID, concentration, beginSemester, beginYear, endSemester, endYear', 'required'),
+			//array('profileID, concentration, beginSemester, beginYear, endSemester, endYear', 'required'),
 			array('profileID', 'length', 'max'=>10),
 			array('concentration', 'length', 'max'=>128),
 			array('beginSemester, endSemester', 'length', 'max'=>8),
@@ -62,7 +62,7 @@ class Concentration extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'profile' => array(self::BELONGS_TO, 'Profiles', 'profileID'),
+			'profile' => array(self::BELONGS_TO, 'Profile', 'profileID'),
 		);
 	}
 
@@ -104,5 +104,13 @@ class Concentration extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function getSemesterOptions() {
+		return array(
+			'Fall' => 'Fall',
+			'Spring' => 'Spring',
+			'Summer' => 'Summer',
+		);
 	}
 }

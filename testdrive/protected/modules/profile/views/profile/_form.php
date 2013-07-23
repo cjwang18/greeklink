@@ -11,12 +11,17 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($model, $position); ?>
 
+	<!-- TODO: Implement uploading of profile picture -->
 	<div class="row">
 		<?php echo $form->labelEx($model,'profilePic'); ?>
 		<?php echo $form->textField($model,'profilePic',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'profilePic'); ?>
+	</div>
+
+	<div class="row">
+		<br><b>GREEK</b><br><br>
 	</div>
 
 	<div class="row">
@@ -25,10 +30,64 @@
 		<?php echo $form->error($model,'chapter'); ?>
 	</div>
 
+	<!-- Begin Position -->
+	<div class="row">
+		<br><hr><b>Position(s)</b> - 
+		<?php echo CHtml::link('Add', '#', array('class' => 'loadByAjax', 'id' => 'position')); ?>
+	</div>
+	
+	<div id="positions">
+		<?php
+			$index = 0;
+			foreach ($model->profilesPositions as $id => $position):
+				$this->renderPartial('/position/_form', array(
+					'model' => $position,
+					'index' => $id,
+					'display' => 'block'
+				));
+				$index++;
+			endforeach;
+		?>
+	</div>
+
+	<div class="row">
+		<br><hr>
+	</div>
+	<!-- End Position -->
+
+	<!-- Begin CommitteeInvolvement -->
+	<div class="row">
+		<b>Committee Involvement</b> - 
+		<?php echo CHtml::link('Add', '#', array('class' => 'loadByAjax', 'id' => 'committeeInvolvement')); ?>
+	</div>
+
+	<div id="committeeInvolvements">
+		<?php
+			$index = 0;
+			foreach ($model->profilesCommitteeInvolvements as $id => $ci):
+				$this->renderPartial('/committeeInvolvement/_form', array(
+					'model' => $ci,
+					'index' => $id,
+					'display' => 'block'
+				));
+				$index++;
+			endforeach;
+		?>
+	</div>
+
+	<div class="row">
+		<br><hr>
+	</div>
+	<!-- End CommitteeInvolvement -->
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'intramural'); ?>
 		<?php echo $form->textArea($model,'intramural',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'intramural'); ?>
+	</div>
+
+	<div class="row">
+		<br><b>PERSONAL</b><br><br>
 	</div>
 
 	<div class="row">
@@ -86,6 +145,10 @@
 	</div>
 
 	<div class="row">
+		<br><b>CONTACT</b><br><br>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'phone'); ?>
 		<?php echo $form->textField($model,'phone',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'phone'); ?>
@@ -107,6 +170,10 @@
 		<?php echo $form->labelEx($model,'website'); ?>
 		<?php echo $form->textField($model,'website',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'website'); ?>
+	</div>
+
+	<div class="row">
+		<br><b>EDUCATION</b><br><br>
 	</div>
 
 	<div class="row">
@@ -146,3 +213,28 @@
 <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<?php
+Yii::app()->clientScript->registerCoreScript('jquery');
+Yii::app()->clientScript->registerScript('loadposition', '
+var _index = ' . $index . ';
+$(".loadByAjax").click(function(e){
+    e.preventDefault();
+    var _loadFor = $(this).attr("id");
+    var _url = "' . Yii::app()->controller->createUrl("loadByAjax") . '?loadFor="+_loadFor+"&index="+_index;
+    console.log(_url);
+    $.ajax({
+        url: _url,
+        success:function(response){
+            $("#"+_loadFor+"s").append(response);
+            $("#"+_loadFor+"s .instance").last().animate({
+                opacity : 1, 
+                left: "+50", 
+                height: "auto"
+            });
+        }
+    });
+    _index++;
+});
+', CClientScript::POS_END);
+?>

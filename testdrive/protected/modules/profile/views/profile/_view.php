@@ -34,7 +34,7 @@
 
 	<?php
 		if ($profileData->profilesCommitteeInvolvements) {
-			echo '<b>Committee Invovlement:</b>';
+			echo '<b>Committee Involvement:</b>';
 			foreach ($profileData->profilesCommitteeInvolvements as $c) {
 				$dates = CHtml::encode($c->beginSemester).' '.CHtml::encode($c->beginYear).' - '.CHtml::encode($c->endSemester).' '.CHtml::encode($c->endYear);
 				echo '<br>'.$dates.' | '.CHtml::encode($c->name);

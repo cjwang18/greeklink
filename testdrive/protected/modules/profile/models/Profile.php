@@ -188,4 +188,10 @@ class Profile extends CActiveRecord
 			'December' => 'December',
 		);
 	}
+
+	public function behaviors(){
+		return array('ESaveRelatedBehavior' => array(
+			'class' => 'profile.components.ESaveRelatedBehavior')
+		);
+	}
 }

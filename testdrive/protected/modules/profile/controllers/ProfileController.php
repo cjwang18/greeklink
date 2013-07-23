@@ -30,7 +30,7 @@ class ProfileController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'update' and 'view' actions
-				'actions'=>array('update','view','default'),
+				'actions'=>array('update','view','default','loadByAjax'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -105,8 +105,18 @@ class ProfileController extends Controller
 			if(isset($_POST['Profile']))
 			{
 				$model->attributes=$_POST['Profile'];
-				if($model->save())
+
+				if (isset($_POST['Position'])) {
+					$model->profilesPositions = $_POST['Position'];
+				}
+
+				if ($model->saveWithRelated('profilesPositions'))
 					$this->redirect(array('view','id'=>$model->profileID));
+				else
+					$model->addError('profilesPositions', 'Error occured while saving position(s).');					
+
+				/*if($model->save())
+					$this->redirect(array('view','id'=>$model->profileID));*/
 			}
 
 			$this->render('update',array(
@@ -184,5 +194,23 @@ class ProfileController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionLoadByAjax($loadFor, $index)
+	{
+		switch ($loadFor) {
+			case "committeeInvolvement":
+				$model = new CommitteeInvolvement;
+				break;
+			case "position":
+				$model = new Position;
+				break;
+		}
+		
+		$this->renderPartial('/'.$loadFor.'/_form', array(
+			'model' => $model,
+			'index' => $index,
+			'display' => 'block',
+		), false, true);
 	}
 }

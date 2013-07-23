@@ -106,14 +106,22 @@ class ProfileController extends Controller
 			{
 				$model->attributes=$_POST['Profile'];
 
-				if (isset($_POST['Position'])) {
-					$model->profilesPositions = $_POST['Position'];
+				$relationsToSave = array();
+
+				if (isset($_POST['CommitteeInvolvement'])) {
+					$model->profilesCommitteeInvolvements = $_POST['CommitteeInvolvement'];
+					array_push($relationsToSave, 'profilesCommitteeInvolvements');
 				}
 
-				if ($model->saveWithRelated('profilesPositions'))
+				if (isset($_POST['Position'])) {
+					$model->profilesPositions = $_POST['Position'];
+					array_push($relationsToSave, 'profilesPositions');
+				}
+
+				if ($model->saveWithRelated($relationsToSave))
 					$this->redirect(array('view','id'=>$model->profileID));
 				else
-					$model->addError('profilesPositions', 'Error occured while saving position(s).');					
+					$model->addError('Profile', 'Error occured while saving relational data.');
 
 				/*if($model->save())
 					$this->redirect(array('view','id'=>$model->profileID));*/

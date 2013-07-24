@@ -1,60 +1,62 @@
 <?php
 /* @var $this ConcentrationController */
 /* @var $model Concentration */
-/* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="instance">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'concentration-form',
-	'enableAjaxValidation'=>false,
-)); ?>
-
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
-
-	<?php echo $form->errorSummary($model); ?>
+	<br>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'profileID'); ?>
-		<?php echo $form->textField($model,'profileID',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'profileID'); ?>
+		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']concentration'); ?>
+		<?php echo CHtml::activeTextField($model,'[' . $index . ']concentration',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo CHtml::error($model,'[' . $index . ']concentration'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'concentration'); ?>
-		<?php echo $form->textField($model,'concentration',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'concentration'); ?>
+		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']beginSemester'); ?>
+		<?php echo CHtml::activeDropDownList($model, '[' . $index . ']beginSemester', $model->semesterOptions, array('prompt' => 'Select Semester')); ?>
+		<?php echo CHtml::error($model,'[' . $index . ']beginSemester'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'beginSemester'); ?>
-		<?php echo $form->dropDownList($model, 'beginSemester', $model->semesterOptions, array('prompt' => 'Select Semester')); ?>
-		<?php echo $form->error($model,'beginSemester'); ?>
+		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']beginYear'); ?>
+		<?php echo CHtml::activeTextField($model,'[' . $index . ']beginYear',array('size'=>4,'maxlength'=>4)); ?>
+		<?php echo CHtml::error($model,'[' . $index . ']beginYear'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'beginYear'); ?>
-		<?php echo $form->textField($model,'beginYear',array('size'=>4,'maxlength'=>4)); ?>
-		<?php echo $form->error($model,'beginYear'); ?>
+		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']endSemester'); ?>
+		<?php echo CHtml::activeDropDownList($model, '[' . $index . ']endSemester', $model->semesterOptions, array('prompt' => 'Select Semester')); ?>
+		<?php echo CHtml::error($model,'[' . $index . ']endSemester'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'endSemester'); ?>
-		<?php echo $form->dropDownList($model, 'endSemester', $model->semesterOptions, array('prompt' => 'Select Semester')); ?>
-		<?php echo $form->error($model,'endSemester'); ?>
+		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']endYear'); ?>
+		<?php echo CHtml::activeTextField($model,'[' . $index . ']endYear',array('size'=>4,'maxlength'=>4)); ?>
+		<?php echo CHtml::error($model,'[' . $index . ']endYear'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'endYear'); ?>
-		<?php echo $form->textField($model,'endYear',array('size'=>4,'maxlength'=>4)); ?>
-		<?php echo $form->error($model,'endYear'); ?>
+		<?php echo CHtml::link('Delete', '#', array('onclick' => 'deleteChild(this, ' . $index . '); return false;')); ?>
 	</div>
-
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
-
-<?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<?php
+Yii::app()->clientScript->registerScript('deleteChild', "
+function deleteChild(elm, index)
+{
+	element=$(elm).parent().parent();
+	/* animate div */
+	$(element).animate(
+	{
+		opacity: 0.25, 
+		left: '+=50', 
+		height: 'toggle'
+	}, 500,
+	function() {
+		/* remove div */
+		$(element).remove();
+	});
+}", CClientScript::POS_END);

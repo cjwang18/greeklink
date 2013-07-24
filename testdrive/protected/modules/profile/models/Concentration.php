@@ -113,4 +113,15 @@ class Concentration extends CActiveRecord
 			'Summer' => 'Summer',
 		);
 	}
+
+	public function beforeSave() {
+		$this->profileID = Yii::app()->user->pid;
+		return parent::beforeSave();
+	}
+
+	public function behaviors(){
+		return array('ESaveRelatedBehavior' => array(
+			'class' => 'profile.components.ESaveRelatedBehavior')
+		);
+	}
 }

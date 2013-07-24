@@ -11,7 +11,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<?php echo $form->errorSummary($model, $position); ?>
+	<?php echo $form->errorSummary($model); ?>
 
 	<!-- TODO: Implement uploading of profile picture -->
 	<div class="row">
@@ -84,6 +84,11 @@
 		<?php echo $form->labelEx($model,'intramural'); ?>
 		<?php echo $form->textArea($model,'intramural',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'intramural'); ?>
+	</div>
+
+	<!-- CJ20130723 Skipping over Fraternal Family until Links are implemented -->
+	<div class="row">
+		<b>Fraternal Family</b>
 	</div>
 
 	<div class="row">
@@ -194,6 +199,31 @@
 		<?php echo $form->error($model,'gpa'); ?>
 	</div>
 
+	<!-- Begin Concentration -->
+	<div class="row">
+		<br><hr><b>Concentration(s)</b> - 
+		<?php echo CHtml::link('Add', '#', array('class' => 'loadByAjax', 'id' => 'concentration')); ?>
+	</div>
+
+	<div id="concentrations">
+		<?php
+			$index = 0;
+			foreach ($model->profilesConcentrations as $id => $c):
+				$this->renderPartial('/concentration/_form', array(
+					'model' => $c,
+					'index' => $id,
+					'display' => 'block'
+				));
+				$index++;
+			endforeach;
+		?>
+	</div>
+
+	<div class="row">
+		<br><hr>
+	</div>
+	<!-- End Concentration -->
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'honors'); ?>
 		<?php echo $form->textArea($model,'honors',array('rows'=>6, 'cols'=>50)); ?>
@@ -205,6 +235,81 @@
 		<?php echo $form->textArea($model,'relevantCoursework',array('rows'=>6, 'cols'=>50)); ?>
 		<?php echo $form->error($model,'relevantCoursework'); ?>
 	</div>
+
+	<!-- Begin WorkExperience -->
+	<div class="row">
+		<br><hr><b>WORK EXPERIENCE</b> - 
+		<?php echo CHtml::link('Add', '#', array('class' => 'loadByAjax', 'id' => 'workExperience')); ?>
+	</div>
+
+	<div id="workExperiences">
+		<?php
+			$index = 0;
+			foreach ($model->profilesWorkExperiences as $id => $we):
+				$this->renderPartial('/workExperience/_form', array(
+					'model' => $we,
+					'index' => $id,
+					'display' => 'block'
+				));
+				$index++;
+			endforeach;
+		?>
+	</div>
+
+	<div class="row">
+		<br><hr>
+	</div>
+	<!-- End WorkExperience -->
+
+	<!-- Begin Activity -->
+	<div class="row">
+		<b>ACTIVITIES</b> - 
+		<?php echo CHtml::link('Add', '#', array('class' => 'loadByAjax', 'id' => 'activity')); ?>
+	</div>
+
+	<div id="activitys">
+		<?php
+			$index = 0;
+			foreach ($model->profilesActivities as $id => $a):
+				$this->renderPartial('/activity/_form', array(
+					'model' => $a,
+					'index' => $id,
+					'display' => 'block'
+				));
+				$index++;
+			endforeach;
+		?>
+	</div>
+
+	<div class="row">
+		<br><hr>
+	</div>
+	<!-- End Activity -->
+
+	<!-- Begin Skill -->
+	<div class="row">
+		<b>SKILLS</b> - 
+		<?php echo CHtml::link('Add', '#', array('class' => 'loadByAjax', 'id' => 'skill')); ?>
+	</div>
+
+	<div id="skills">
+		<?php
+			$index = 0;
+			foreach ($model->profilesSkills as $id => $s):
+				$this->renderPartial('/skill/_form', array(
+					'model' => $s,
+					'index' => $id,
+					'display' => 'block'
+				));
+				$index++;
+			endforeach;
+		?>
+	</div>
+
+	<div class="row">
+		<br><hr>
+	</div>
+	<!-- End Skill -->
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>

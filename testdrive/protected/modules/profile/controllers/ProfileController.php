@@ -108,14 +108,34 @@ class ProfileController extends Controller
 
 				$relationsToSave = array();
 
+				if (isset($_POST['Activity'])) {
+					$model->profilesActivities = $_POST['Activity'];
+					array_push($relationsToSave, 'profilesActivities');
+				}
+
 				if (isset($_POST['CommitteeInvolvement'])) {
 					$model->profilesCommitteeInvolvements = $_POST['CommitteeInvolvement'];
 					array_push($relationsToSave, 'profilesCommitteeInvolvements');
 				}
 
+				if (isset($_POST['Concentration'])) {
+					$model->profilesConcentrations = $_POST['Concentration'];
+					array_push($relationsToSave, 'profilesConcentrations');
+				}
+
 				if (isset($_POST['Position'])) {
 					$model->profilesPositions = $_POST['Position'];
 					array_push($relationsToSave, 'profilesPositions');
+				}
+
+				if (isset($_POST['Skill'])) {
+					$model->profilesSkills = $_POST['Skill'];
+					array_push($relationsToSave, 'profilesSkills');
+				}
+
+				if (isset($_POST['WorkExperience'])) {
+					$model->profilesWorkExperiences = $_POST['WorkExperience'];
+					array_push($relationsToSave, 'profilesWorkExperiences');
 				}
 
 				if ($model->saveWithRelated($relationsToSave))
@@ -207,11 +227,23 @@ class ProfileController extends Controller
 	public function actionLoadByAjax($loadFor, $index)
 	{
 		switch ($loadFor) {
+			case "activity":
+				$model = new Activity;
+				break;
 			case "committeeInvolvement":
 				$model = new CommitteeInvolvement;
 				break;
+			case "concentration":
+				$model = new Concentration;
+				break;
 			case "position":
 				$model = new Position;
+				break;
+			case "skill":
+				$model = new Skill;
+				break;
+			case "workExperience":
+				$model = new WorkExperience;
 				break;
 		}
 		

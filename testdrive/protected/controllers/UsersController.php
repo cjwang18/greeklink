@@ -180,6 +180,8 @@ class UsersController extends Controller
 			$data = Organizations::model()->findAll('type=:type', array(':type'=> 'F'));
 		} else if ($gender == 'f') {
 			$data = Organizations::model()->findAll('type=:type', array(':type'=> 'S'));
+		} else {
+			$data = Organizations::model()->findAll();
 		}
 		return CHtml::listData($data, 'orgID', 'name');
 	}

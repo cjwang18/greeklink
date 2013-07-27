@@ -6,7 +6,7 @@ class ProfileController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/profile';
+	public $layout='//layouts/column2';
 
 	public $defaultAction = 'default';
 
@@ -56,6 +56,7 @@ class ProfileController extends Controller
 		// User can only view his/her own profile
 		// TODO: allow user's links to view profile
 		if ($model->userID == Yii::app()->user->id) {
+			$this->layout='//layouts/profile';
 			$this->render('view',array(
 				'model'=>$model,
 			));
@@ -147,6 +148,7 @@ class ProfileController extends Controller
 					$this->redirect(array('view','id'=>$model->profileID));*/
 			}
 
+			$this->layout='//layouts/column2';
 			$this->render('update',array(
 				'model'=>$model,
 			));

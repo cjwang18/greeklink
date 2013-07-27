@@ -8,10 +8,11 @@
  * @property string $profileID
  * @property string $name
  * @property string $description
- * @property integer $beginMonth
+ * @property string $beginMonth
  * @property string $beginYear
- * @property integer $endMonth
+ * @property string $endMonth
  * @property string $endYear
+ * @property integer $present
  *
  * The followings are the available model relations:
  * @property Profiles $profile
@@ -45,14 +46,14 @@ class WorkExperience extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			//array('profileID, name, description, beginMonth, beginYear, endMonth, endYear', 'required'),
-			//array('beginMonth, endMonth', 'numerical', 'integerOnly'=>true),
-			array('profileID', 'length', 'max'=>10),
+			array('present', 'numerical', 'integerOnly'=>true),
+			array('profileID, beginMonth, endMonth', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>128),
 			array('beginYear, endYear', 'length', 'max'=>4),
 			array('description, beginMonth, endMonth', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, profileID, name, description, beginMonth, beginYear, endMonth, endYear', 'safe', 'on'=>'search'),
+			array('id, profileID, name, description, beginMonth, beginYear, endMonth, endYear, present', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -82,6 +83,7 @@ class WorkExperience extends CActiveRecord
 			'beginYear' => 'Begin Year',
 			'endMonth' => 'End Month',
 			'endYear' => 'End Year',
+			'present' => 'Present',
 		);
 	}
 
@@ -100,10 +102,11 @@ class WorkExperience extends CActiveRecord
 		$criteria->compare('profileID',$this->profileID,true);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('description',$this->description,true);
-		$criteria->compare('beginMonth',$this->beginMonth);
+		$criteria->compare('beginMonth',$this->beginMonth,true);
 		$criteria->compare('beginYear',$this->beginYear,true);
-		$criteria->compare('endMonth',$this->endMonth);
+		$criteria->compare('endMonth',$this->endMonth,true);
 		$criteria->compare('endYear',$this->endYear,true);
+		$criteria->compare('present',$this->present);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

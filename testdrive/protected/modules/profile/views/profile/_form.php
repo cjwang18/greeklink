@@ -321,6 +321,7 @@
 
 <?php
 Yii::app()->clientScript->registerCoreScript('jquery');
+
 Yii::app()->clientScript->registerScript('loadposition', '
 var _index = ' . $index . ';
 $(".loadByAjax").click(function(e){
@@ -342,4 +343,43 @@ $(".loadByAjax").click(function(e){
     _index++;
 });
 ', CClientScript::POS_END);
+
+Yii::app()->clientScript->registerScript('presentToggle', "
+$(document).ready(function() {
+	$('.presentCB').each(function() {
+		if ($(this).is(':checked')) {
+			$(this).parent().parent().find('.endDate').hide();
+		}
+	});
+});
+
+function presentToggle(cb)
+{
+	if ($(cb).is(':checked')) {
+		$(cb).parent().parent().find('.endDate').hide();
+		$(cb).parent().parent().find('.endDateField').each(function() {
+			$(this).val('');
+		});
+	}
+	else
+		$(cb).parent().parent().find('.endDate').show();
+}
+", CClientScript::POS_END);
+
+Yii::app()->clientScript->registerScript('deleteChild', "
+function deleteChild(elm, index)
+{
+	element=$(elm).parent().parent();
+	/* animate div */
+	$(element).animate(
+	{
+		opacity: 0.25, 
+		left: '+=50', 
+		height: 'toggle'
+	}, 500,
+	function() {
+		/* remove div */
+		$(element).remove();
+	});
+}", CClientScript::POS_END);
 ?>

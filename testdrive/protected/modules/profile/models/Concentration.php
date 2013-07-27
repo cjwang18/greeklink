@@ -11,6 +11,7 @@
  * @property string $beginYear
  * @property string $endSemester
  * @property string $endYear
+ * @property integer $present
  *
  * The followings are the available model relations:
  * @property Profiles $profile
@@ -44,13 +45,14 @@ class Concentration extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			//array('profileID, concentration, beginSemester, beginYear, endSemester, endYear', 'required'),
+			array('present', 'numerical', 'integerOnly'=>true),
 			array('profileID', 'length', 'max'=>10),
 			array('concentration', 'length', 'max'=>128),
 			array('beginSemester, endSemester', 'length', 'max'=>8),
 			array('beginYear, endYear', 'length', 'max'=>4),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, profileID, concentration, beginSemester, beginYear, endSemester, endYear', 'safe', 'on'=>'search'),
+			array('id, profileID, concentration, beginSemester, beginYear, endSemester, endYear, present', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +81,7 @@ class Concentration extends CActiveRecord
 			'beginYear' => 'Begin Year',
 			'endSemester' => 'End Semester',
 			'endYear' => 'End Year',
+			'present' => 'Present',
 		);
 	}
 
@@ -100,6 +103,7 @@ class Concentration extends CActiveRecord
 		$criteria->compare('beginYear',$this->beginYear,true);
 		$criteria->compare('endSemester',$this->endSemester,true);
 		$criteria->compare('endYear',$this->endYear,true);
+		$criteria->compare('present',$this->present);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

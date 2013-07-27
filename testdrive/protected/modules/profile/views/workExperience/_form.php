@@ -32,15 +32,23 @@
 	</div>
 
 	<div class="row">
-		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']endMonth'); ?>
-		<?php echo CHtml::activeDropDownList($model, '[' . $index . ']endMonth', $model->monthOptions, array('prompt' => 'Select Month')); ?>
-		<?php echo CHtml::error($model,'[' . $index . ']endMonth'); ?>
+		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']present'); ?>
+		<?php echo CHtml::activeCheckBox($model,'[' . $index . ']present', array('onclick' => 'presentToggle(this);', 'class'=>'presentCB')); ?>
+		<?php echo CHtml::error($model,'[' . $index . ']present'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo CHtml::activeLabelEx($model,'[' . $index . ']endYear'); ?>
-		<?php echo CHtml::activeTextField($model,'[' . $index . ']endYear',array('size'=>4,'maxlength'=>4)); ?>
-		<?php echo CHtml::error($model,'[' . $index . ']endYear'); ?>
+	<div class="endDate">
+		<div class="row">
+			<?php echo CHtml::activeLabelEx($model,'[' . $index . ']endMonth'); ?>
+			<?php echo CHtml::activeDropDownList($model, '[' . $index . ']endMonth', $model->monthOptions, array('prompt' => 'Select Month','class'=>'endDateField')); ?>
+			<?php echo CHtml::error($model,'[' . $index . ']endMonth'); ?>
+		</div>
+
+		<div class="row">
+			<?php echo CHtml::activeLabelEx($model,'[' . $index . ']endYear'); ?>
+			<?php echo CHtml::activeTextField($model,'[' . $index . ']endYear',array('size'=>4,'maxlength'=>4,'class'=>'endDateField')); ?>
+			<?php echo CHtml::error($model,'[' . $index . ']endYear'); ?>
+		</div>
 	</div>
 
 	<div class="row">
@@ -48,21 +56,3 @@
 	</div>
 
 </div><!-- form -->
-
-<?php
-Yii::app()->clientScript->registerScript('deleteChild', "
-function deleteChild(elm, index)
-{
-	element=$(elm).parent().parent();
-	/* animate div */
-	$(element).animate(
-	{
-		opacity: 0.25, 
-		left: '+=50', 
-		height: 'toggle'
-	}, 500,
-	function() {
-		/* remove div */
-		$(element).remove();
-	});
-}", CClientScript::POS_END);

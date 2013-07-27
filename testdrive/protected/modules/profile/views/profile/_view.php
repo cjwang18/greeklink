@@ -28,7 +28,11 @@
 							if ($profileData->profilesPositions) {
 								echo '<b>Positions:</b>';
 								foreach ($profileData->profilesPositions as $p) {
-									$dates = CHtml::encode($p->beginSemester).' '.CHtml::encode($p->beginYear).' - '.CHtml::encode($p->endSemester).' '.CHtml::encode($p->endYear);
+									$beginDates = CHtml::encode($p->beginSemester).' '.CHtml::encode($p->beginYear).' - ';
+									if ($p->present == 1)
+										$dates = $beginDates.'Present';
+									else
+										$dates = $beginDates.CHtml::encode($p->endSemester).' '.CHtml::encode($p->endYear);
 									echo '<br>'.$dates.' | '.CHtml::encode($p->title).' - '.CHtml::encode($p->description);
 								}
 								echo '<br>';
@@ -39,7 +43,11 @@
 							if ($profileData->profilesCommitteeInvolvements) {
 								echo '<b>Committee Involvement:</b>';
 								foreach ($profileData->profilesCommitteeInvolvements as $c) {
-									$dates = CHtml::encode($c->beginSemester).' '.CHtml::encode($c->beginYear).' - '.CHtml::encode($c->endSemester).' '.CHtml::encode($c->endYear);
+									$beginDates = CHtml::encode($c->beginSemester).' '.CHtml::encode($c->beginYear).' - ';
+									if ($c->present == 1)
+										$dates = $beginDates.'Present';
+									else
+										$dates = $beginDates.CHtml::encode($c->endSemester).' '.CHtml::encode($c->endYear);
 									echo '<br>'.$dates.' | '.CHtml::encode($c->name);
 								}
 								echo '<br>';
@@ -185,32 +193,48 @@
 						<b><?php echo CHtml::encode($profileData->getAttributeLabel('relevantCoursework')); ?>:</b>
 						<?php echo CHtml::encode($profileData->relevantCoursework); ?>
 						<br />
-
+					</p>
+				</article>
+			</div>
+			<div>
+				<input id="ac-5" name="accordion-1" type="checkbox" />
+				<label for="ac-5">WORK EXPERIENCE</label>
+				<article class="ac-large">
+					<p>
 						<?php
 							if ($profileData->profilesWorkExperiences) {
-								echo '<br><b>WORK EXPERIENCE</b><br>';
 								foreach ($profileData->profilesWorkExperiences as $w) {
-									echo '<br><b>'.CHtml::encode($w->name).'</b>: '.CHtml::encode($w->description);
+									echo '<b>'.CHtml::encode($w->name).'</b>: '.CHtml::encode($w->description).'<br>';
 								}
-								echo '<br>';
 							}
 						?>
-
+					</p>
+				</article>
+			</div>
+			<div>
+				<input id="ac-6" name="accordion-1" type="checkbox" />
+				<label for="ac-6">ACTIVITIES</label>
+				<article class="ac-large">
+					<p>
 						<?php
 							if ($profileData->profilesActivities) {
-								echo '<br><b>ACTIVITIES</b><br>';
 								foreach ($profileData->profilesActivities as $a) {
-									echo '<br><b>'.CHtml::encode($a->name).'</b>: '.CHtml::encode($a->description);
+									echo '<b>'.CHtml::encode($a->name).'</b>: '.CHtml::encode($a->description).'<br>';
 								}
-								echo '<br>';
 							}
 						?>
-
+					</p>
+				</article>
+			</div>
+			<div>
+				<input id="ac-7" name="accordion-1" type="checkbox" />
+				<label for="ac-7">SKILLS</label>
+				<article class="ac-large">
+					<p>
 						<?php
 							if ($profileData->profilesSkills) {
-								echo '<br><b>SKILLS</b><br>';
 								foreach ($profileData->profilesSkills as $s) {
-									echo '<br><b>'.CHtml::encode($s->category).'</b>: '.CHtml::encode($s->skills);
+									echo '<b>'.CHtml::encode($s->category).'</b>: '.CHtml::encode($s->skills).'<br>';
 								}
 							}
 						?>

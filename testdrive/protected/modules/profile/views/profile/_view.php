@@ -134,9 +134,13 @@
 						<?php echo CHtml::encode($userData->email); ?>
 						<br />
 
-						<b><?php echo CHtml::encode($profileData->getAttributeLabel('phone')); ?>:</b>
-						<?php echo CHtml::encode($profileData->phone); ?>
-						<br />
+						<?php
+							if ($profileData->phone) {
+								echo '<b>'.CHtml::encode($profileData->getAttributeLabel('phone')).':</b>';
+								echo CHtml::encode($profileData->phone);
+								echo '<br>';
+							} 
+						?>
 
 						<b><?php
 							if ($profileData->facebook) {

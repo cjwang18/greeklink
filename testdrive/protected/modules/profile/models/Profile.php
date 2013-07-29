@@ -68,16 +68,17 @@ class Profile extends CActiveRecord
 		return array(
 			//array('graduationMonth', 'numerical', 'integerOnly'=>true),
 			array('userID', 'length', 'max'=>11),
-			array('profilePic, chapter', 'length', 'max'=>128),
+			array('profilePic', 'file','types'=>'jpg, gif, png', 'maxSize'=>1024*1024*5, 'tooLarge'=>'The image is larger than 5MB. Please upload a smaller image.', 'allowEmpty'=>true, 'on'=>'update'), 
+			array('chapter', 'length', 'max'=>128),
 			array('currentCity, hometown, facebook, twitter, website', 'length', 'max'=>64),
 			array('relationship', 'length', 'max'=>16),
 			array('phone', 'length', 'max'=>10),
 			array('graduationYear', 'length', 'max'=>4),
 			array('gpa', 'length', 'max'=>5),
-			array('userID, profilePic, intramural, interests, music, movies, tv, books, games, graduationMonth, honors, relevantCoursework', 'safe'),
+			array('userID, intramural, interests, music, movies, tv, books, games, graduationMonth, honors, relevantCoursework', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('profileID, userID, profilePic, chapter, intramural, currentCity, hometown, relationship, interests, music, movies, tv, books, games, phone, facebook, twitter, website, graduationMonth, graduationYear, gpa, honors, relevantCoursework', 'safe', 'on'=>'search'),
+			array('profileID, userID, chapter, intramural, currentCity, hometown, relationship, interests, music, movies, tv, books, games, phone, facebook, twitter, website, graduationMonth, graduationYear, gpa, honors, relevantCoursework', 'safe', 'on'=>'search'),
 		);
 	}
 

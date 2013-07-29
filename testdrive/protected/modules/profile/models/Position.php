@@ -46,7 +46,7 @@ class Position extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			//array('profileID, title, description, beginSemester, beginYear, endSemester, endYear', 'required'),
-			array('present', 'numerical', 'integerOnly'=>true),
+			array('present, beginYear, endYear', 'numerical', 'integerOnly'=>true),
 			array('profileID', 'length', 'max'=>10),
 			array('title', 'length', 'max'=>128),
 			array('beginSemester, endSemester', 'length', 'max'=>8),

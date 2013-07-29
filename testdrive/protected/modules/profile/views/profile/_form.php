@@ -9,14 +9,24 @@
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'profile-form',
 	'enableAjaxValidation'=>false,
+	'htmlOptions' => array(
+		'enctype' => 'multipart/form-data',
+	),
 )); ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
 	<!-- TODO: Implement uploading of profile picture -->
+	<?php 
+		if ($model->profilePic != '') {
+			echo '<div class="row">';
+			echo CHtml::image(Yii::app()->request->baseUrl.'/images/profilePics/'.$model->profilePic,"image",array("width"=>200));
+			echo '</div>';
+		}
+	?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'profilePic'); ?>
-		<?php echo $form->textField($model,'profilePic',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->fileField($model,'profilePic'); ?>
 		<?php echo $form->error($model,'profilePic'); ?>
 	</div>
 

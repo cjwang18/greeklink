@@ -20,7 +20,7 @@ $this->menu=array(
 
 <?php
 	// Render the HEADER section of the profile
-	// TODO: need to style (change layout) and insert profile picture
+	// TODO: need to style (change layout)
 	$user = Users::model()->findByPk($model->userID);
 	echo $this->renderPartial('_viewHeader', array('userData'=>$user, 'profileData'=>$model));
 ?>

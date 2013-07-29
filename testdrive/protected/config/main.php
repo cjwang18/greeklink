@@ -16,8 +16,10 @@ return array(
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
+		'application.extensions.EPhpThumb.EPhpThumb',
 		'application.extensions.PasswordHash',
 		'application.extensions.YiiMailer.YiiMailer',
+		'application.helpers.*',
 		'application.modules.profile.models.*',
 	),
 
@@ -87,6 +89,10 @@ return array(
 				),
 				
 			),
+		),
+
+		'phpThumb'=>array(
+			'class'=>'application.extensions.EPhpThumb.EPhpThumb',
 		),
 	),
 

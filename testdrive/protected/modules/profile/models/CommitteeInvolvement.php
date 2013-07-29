@@ -45,7 +45,7 @@ class CommitteeInvolvement extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			//array('profileID, name, beginSemester, beginYear, endSemester, endYear', 'required'),
-			array('present', 'numerical', 'integerOnly'=>true),
+			array('present, beginYear, endYear', 'numerical', 'integerOnly'=>true),
 			array('profileID', 'length', 'max'=>10),
 			array('name', 'length', 'max'=>128),
 			array('beginSemester, endSemester', 'length', 'max'=>8),

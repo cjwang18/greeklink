@@ -107,41 +107,276 @@ class ProfileController extends Controller
 			{
 				$model->attributes=$_POST['Profile'];
 
+				// set profile picture path name
+				$uploadedFile = CUploadedFile::getInstance($model,'profilePic');
+				if (!empty($uploadedFile)) {
+					// generate random name
+					$pid = $model->profileID;
+					$rand = md5_file($uploadedFile->getTempName());
+					$fileName = "{$pid}-{$rand}";  // profile ID + hashed file name
+					$model->profilePic = $fileName;
+				}				
+
 				$relationsToSave = array();
 
+				/* ----- Activity ----- */
+				$activityModified = false;
+				// check if related model exists in POST data
 				if (isset($_POST['Activity'])) {
-					$model->profilesActivities = $_POST['Activity'];
-					array_push($relationsToSave, 'profilesActivities');
+					// if the count of records in POST data == count of records in db
+					if (count($_POST['Activity']) == count($model->profilesActivities)) {
+						// loop through each record in POST data and compare with each record in db
+						foreach ($_POST['Activity'] as $key => $value) {
+							$temp = Activity::model()->findByAttributes(array(
+								'profileID' => $model->profileID,
+								'name' => $value['name'],
+								'description' => $value['description'],
+								'beginMonth' => $value['beginMonth'],
+								'beginYear' => $value['beginYear'],
+								'present' => $value['present'],
+								'endMonth' => $value['endMonth'],
+								'endYear' => $value['endYear'],
+							));
+							// if record isn't the same, set modification flag
+							if (!$temp) {
+								$activityModified = true;
+							}
+						}
+					} else {
+						// if the count of records in POST data != count of records in db,
+						// something has obviously changed so set modification flag
+						$activityModified = true;
+					}
+					// if modified, need to save new related model data
+					if ($activityModified == true) {
+						$model->profilesActivities = $_POST['Activity'];
+						array_push($relationsToSave, 'profilesActivities');
+					}
+				} else {
+					// if related model doesn't exist in POST,
+					// check if related model has any records in db
+					if (count($model->profilesActivities) != 0) {
+						// if it does, deletion is necessary
+						$model->profilesActivities = array();
+						array_push($relationsToSave, 'profilesActivities');
+					}
 				}
 
+				/* ----- CommitteeInvolvement ----- */
+				$committeeInvolvementModified = false;
+				// check if related model exists in POST data
 				if (isset($_POST['CommitteeInvolvement'])) {
-					$model->profilesCommitteeInvolvements = $_POST['CommitteeInvolvement'];
-					array_push($relationsToSave, 'profilesCommitteeInvolvements');
+					// if the count of records in POST data == count of records in db
+					if (count($_POST['CommitteeInvolvement']) == count($model->profilesCommitteeInvolvements)) {
+						// loop through each record in POST data and compare with each record in db
+						foreach ($_POST['CommitteeInvolvement'] as $key => $value) {
+							$temp = CommitteeInvolvement::model()->findByAttributes(array(
+								'profileID' => $model->profileID,
+								'name' => $value['name'],
+								'beginSemester' => $value['beginSemester'],
+								'beginYear' => $value['beginYear'],
+								'present' => $value['present'],
+								'endSemester' => $value['endSemester'],
+								'endYear' => $value['endYear'],
+							));
+							// if record isn't the same, set modification flag
+							if (!$temp) {
+								$committeeInvolvementModified = true;
+							}
+						}
+					} else {
+						// if the count of records in POST data != count of records in db,
+						// something has obviously changed so set modification flag
+						$committeeInvolvementModified = true;
+					}
+					// if modified, need to save new related model data
+					if ($committeeInvolvementModified == true) {
+						$model->profilesCommitteeInvolvements = $_POST['CommitteeInvolvement'];
+						array_push($relationsToSave, 'profilesCommitteeInvolvements');
+					}
+				} else {
+					// if related model doesn't exist in POST,
+					// check if related model has any records in db
+					if (count($model->profilesCommitteeInvolvements) != 0) {
+						// if it does, deletion is necessary
+						$model->profilesCommitteeInvolvements = array();
+						array_push($relationsToSave, 'profilesCommitteeInvolvements');
+					}
 				}
 
+				/* ----- Concentration ----- */
+				$concentrationModified = false;
+				// check if related model exists in POST data
 				if (isset($_POST['Concentration'])) {
-					$model->profilesConcentrations = $_POST['Concentration'];
-					array_push($relationsToSave, 'profilesConcentrations');
+					// if the count of records in POST data == count of records in db
+					if (count($_POST['Concentration']) == count($model->profilesConcentrations)) {
+						// loop through each record in POST data and compare with each record in db
+						foreach ($_POST['Concentration'] as $key => $value) {
+							$temp = Concentration::model()->findByAttributes(array(
+								'profileID' => $model->profileID,
+								'concentration' => $value['concentration'],
+								'beginSemester' => $value['beginSemester'],
+								'beginYear' => $value['beginYear'],
+								'present' => $value['present'],
+								'endSemester' => $value['endSemester'],
+								'endYear' => $value['endYear'],
+							));
+							// if record isn't the same, set modification flag
+							if (!$temp) {
+								$concentrationModified = true;
+							}
+						}
+					} else {
+						// if the count of records in POST data != count of records in db,
+						// something has obviously changed so set modification flag
+						$concentrationModified = true;
+					}
+					// if modified, need to save new related model data
+					if ($concentrationModified == true) {
+						$model->profilesConcentrations = $_POST['Concentration'];
+						array_push($relationsToSave, 'profilesConcentrations');
+					}
+				} else {
+					// if related model doesn't exist in POST,
+					// check if related model has any records in db
+					if (count($model->profilesConcentrations) != 0) {
+						// if it does, deletion is necessary
+						$model->profilesConcentrations = array();
+						array_push($relationsToSave, 'profilesConcentrations');
+					}
 				}
 
+				/* ----- Position ----- */
+				$positionModified = false;
+				// check if related model exists in POST data
 				if (isset($_POST['Position'])) {
-					$model->profilesPositions = $_POST['Position'];
-					array_push($relationsToSave, 'profilesPositions');
+					// if the count of records in POST data == count of records in db
+					if (count($_POST['Position']) == count($model->profilesPositions)) {
+						// loop through each record in POST data and compare with each record in db
+						foreach ($_POST['Position'] as $key => $value) {
+							$temp = Position::model()->findByAttributes(array(
+								'profileID' => $model->profileID,
+								'title' => $value['title'],
+								'description' => $value['description'],
+								'beginSemester' => $value['beginSemester'],
+								'beginYear' => $value['beginYear'],
+								'present' => $value['present'],
+								'endSemester' => $value['endSemester'],
+								'endYear' => $value['endYear'],
+							));
+							// if record isn't the same, set modification flag
+							if (!$temp) {
+								$positionModified = true;
+							}
+						}
+					} else {
+						// if the count of records in POST data != count of records in db,
+						// something has obviously changed so set modification flag
+						$positionModified = true;
+					}
+					// if modified, need to save new related model data
+					if ($positionModified == true) {
+						$model->profilesPositions = $_POST['Position'];
+						array_push($relationsToSave, 'profilesPositions');
+					}
+				} else {
+					// if related model doesn't exist in POST,
+					// check if related model has any records in db
+					if (count($model->profilesPositions) != 0) {
+						// if it does, deletion is necessary
+						$model->profilesPositions = array();
+						array_push($relationsToSave, 'profilesPositions');
+					}
 				}
 
+				/* ----- Skill ----- */
+				$skillModified = false;
+				// check if related model exists in POST data
 				if (isset($_POST['Skill'])) {
-					$model->profilesSkills = $_POST['Skill'];
-					array_push($relationsToSave, 'profilesSkills');
+					// if the count of records in POST data == count of records in db
+					if (count($_POST['Skill']) == count($model->profilesSkills)) {
+						// loop through each record in POST data and compare with each record in db
+						foreach ($_POST['Skill'] as $key => $value) {
+							$temp = Skill::model()->findByAttributes(array(
+								'profileID' => $model->profileID,
+								'category' => $value['category'],
+								'skills' => $value['skills'],
+							));
+							// if record isn't the same, set modification flag
+							if (!$temp) {
+								$skillModified = true;
+							}
+						}
+					} else {
+						// if the count of records in POST data != count of records in db,
+						// something has obviously changed so set modification flag
+						$skillModified = true;
+					}
+					// if modified, need to save new related model data
+					if ($skillModified == true) {
+						$model->profilesSkills = $_POST['Skill'];
+						array_push($relationsToSave, 'profilesSkills');
+					}
+				} else {
+					// if related model doesn't exist in POST,
+					// check if related model has any records in db
+					if (count($model->profilesSkills) != 0) {
+						// if it does, deletion is necessary
+						$model->profilesSkills = array();
+						array_push($relationsToSave, 'profilesSkills');
+					}
 				}
 
+				/* ----- WorkExperience ----- */
+				$workExperienceModified = false;
+				// check if related model exists in POST data
 				if (isset($_POST['WorkExperience'])) {
-					$model->profilesWorkExperiences = $_POST['WorkExperience'];
-					array_push($relationsToSave, 'profilesWorkExperiences');
+					// if the count of records in POST data == count of records in db
+					if (count($_POST['WorkExperience']) == count($model->profilesWorkExperiences)) {
+						// loop through each record in POST data and compare with each record in db
+						foreach ($_POST['WorkExperience'] as $key => $value) {
+							$temp = WorkExperience::model()->findByAttributes(array(
+								'profileID' => $model->profileID,
+								'name' => $value['name'],
+								'description' => $value['description'],
+								'beginMonth' => $value['beginMonth'],
+								'beginYear' => $value['beginYear'],
+								'present' => $value['present'],
+								'endMonth' => $value['endMonth'],
+								'endYear' => $value['endYear'],
+							));
+							// if record isn't the same, set modification flag
+							if (!$temp) {
+								$workExperienceModified = true;
+							}
+						}
+					} else {
+						// if the count of records in POST data != count of records in db,
+						// something has obviously changed so set modification flag
+						$workExperienceModified = true;
+					}
+					// if modified, need to save new related model data
+					if ($workExperienceModified == true) {
+						$model->profilesWorkExperiences = $_POST['WorkExperience'];
+						array_push($relationsToSave, 'profilesWorkExperiences');
+					}
+				} else {
+					// if related model doesn't exist in POST,
+					// check if related model has any records in db
+					if (count($model->profilesWorkExperiences) != 0) {
+						// if it does, deletion is necessary
+						$model->profilesWorkExperiences = array();
+						array_push($relationsToSave, 'profilesWorkExperiences');
+					}
 				}
 
-				if ($model->saveWithRelated($relationsToSave))
+				if ($model->saveWithRelated($relationsToSave)) {
+					if (!empty($uploadedFile)) {
+						// save profile picture
+						$uploadedFile->saveAs(Yii::app()->basePath.'/../images/profilePics/'.$fileName);
+					}
 					$this->redirect(array('view','id'=>$model->profileID));
-				else
+				} else
 					$model->addError('Profile', 'Error occured while saving relational data.');
 
 				/*if($model->save())

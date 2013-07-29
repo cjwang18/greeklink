@@ -16,7 +16,6 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<!-- TODO: Implement uploading of profile picture -->
 	<?php 
 		if ($model->profilePic != '') {
 			echo '<div class="row">';

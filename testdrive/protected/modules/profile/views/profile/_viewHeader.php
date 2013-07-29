@@ -2,8 +2,6 @@
 /* @var $this ProfileController */
 /* @var $userData Users */
 /* @var $profileData Profile */
-
-Yii::import('application.extensions.image.Image');
 ?>
 
 

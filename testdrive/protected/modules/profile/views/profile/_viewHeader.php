@@ -13,11 +13,14 @@
 
 			<?php
 				$folder = 'images/profilePics/';
-				$thumb = Yii::app()->phpThumb->create($folder.$profileData->profilePic);
-				$thumb->adaptiveResize(100,100);
-				$cacheImg = $folder.'thumbs/'.$profileData->profilePic;
-				$thumb->save($cacheImg);
-				echo CHtml::image(Yii::app()->request->baseUrl.'/'.$cacheImg, "image");
+				if ($profileData->profilePic) {
+					$thumb = Yii::app()->phpThumb->create($folder.$profileData->profilePic);
+					$thumb->adaptiveResize(100,100);
+					$cacheImg = $folder.'thumbs/'.$profileData->profilePic;
+					$thumb->save($cacheImg);
+					echo CHtml::image(Yii::app()->request->baseUrl.'/'.$cacheImg, "image");
+				}
+				
 			?>
 
 			<span class="nameFont"><?php echo CHtml::encode($userData->name); ?></span>

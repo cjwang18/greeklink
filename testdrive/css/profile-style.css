@@ -51,13 +51,28 @@ body
     font-family: 'Droid Serif', serif;
 }
 
+.divProfilePic {
+    float: left;
+    margin:;
+    width: 100px;
+    height: 100px;
+    padding: 12.5px;
+}
+
 .divProfileHeader {
     background-color: rgba(225, 225, 225, 0.9);
     text-align: left;
     margin-right: 0;
     margin-left: auto;
     padding: 10px;
-    width: 400px;
+    width: 550px;
+    height: inherit;
+}
+
+.divHeader {
+    margin: auto;
+    padding: 0;
+    width: 720px;
     height: inherit;
 }
 

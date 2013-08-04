@@ -23,6 +23,12 @@ class Users extends CActiveRecord
 	// holds the password confirmation word
 	public $repeatPassword;
 
+	// holds the query string for graduation year
+	public $graduationYearSearch;
+
+	// holds the query string for concentration
+	public $concentrationSearch;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -61,7 +67,7 @@ class Users extends CActiveRecord
 			array('password', 'compare', 'compareAttribute'=>'repeatPassword'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('userID, name, organization, state, university, birthday, gender, initiationYear, email', 'safe', 'on'=>'search'),
+			array('userID, name, organization, state, university, birthday, gender, initiationYear, email, graduationYearSearch, concentrationSearch', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -81,7 +87,7 @@ class Users extends CActiveRecord
 			'links' => array(self::HAS_MANY, 'Links', 'link'), // the user's friend (link)
 			'posts' => array(self::HAS_MANY, 'Posts', 'author'),
 			'posts1' => array(self::HAS_MANY, 'Posts', 'owner'), // the user whose wall the post belongs to
-			'profile' => array(self::HAS_ONE, 'Profiles', 'userID'),
+			'profile' => array(self::HAS_ONE, 'Profile', 'userID'),
 			'votes' => array(self::HAS_MANY, 'Votes', 'userID'),
 		);
 	}
@@ -103,6 +109,8 @@ class Users extends CActiveRecord
 			'email' => 'Email',
 			'password' => 'Password',
 			'status' => 'Verification Status',
+			'graduationYearSearch' => 'Graduation Year',
+			'concentrationSearch' => 'Concentration',
 		);
 	}
 
@@ -116,6 +124,7 @@ class Users extends CActiveRecord
 		// should not be searched.
 
 		$criteria=new CDbCriteria;
+		$criteria->with = array( 'profile' );
 
 		$criteria->compare('userID',$this->userID);
 		$criteria->compare('name',$this->name,true);
@@ -127,6 +136,10 @@ class Users extends CActiveRecord
 		$criteria->compare('initiationYear',$this->initiationYear,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('profile.graduationYear', $this->graduationYearSearch, true);
+		$criteria->compare('concentration',$this->concentrationSearch,true);
+		$criteria->with = array('profile.profilesConcentrations'=>array('select'=>'profile.profilesConcentrations.concentration','together'=>true,'select'=>false));
+		// Setting 'select' to false enables display of all of user's concentrations, not just the ones matched in the query
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

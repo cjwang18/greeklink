@@ -38,7 +38,7 @@ $('.search-form form').submit(function(){
 <?php //if(isset($_GET['Users'])) : ?>
 	<?php $this->widget('zii.widgets.CListView', array(
 		'dataProvider'=>$dataProvider,
-		'itemView'=>'_view',
+		'itemView'=>'_viewSearch',
 		'id'=>'usersView',
 	)); ?>
 <?php //endif; ?>

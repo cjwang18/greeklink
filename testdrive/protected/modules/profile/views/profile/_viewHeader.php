@@ -11,13 +11,16 @@
 <div class="divHeader">
 	<div class="divProfilePic divShadow transparentWhite">
 		<?php
-			$folder = 'images/profilePics/';
 			if ($profileData->profilePic) {
-				$thumb = Yii::app()->phpThumb->create($folder.$profileData->profilePic);
-				$thumb->adaptiveResize(100,100);
+				$folder = 'images/profilePics/';
 				$cacheImg = $folder.'thumbs/'.$profileData->profilePic;
-				$thumb->save($cacheImg);
-				echo CHtml::image(Yii::app()->request->baseUrl.'/'.$cacheImg, "image");
+				// Check if cached thumb already exists
+				if (!file_exists($cacheImg)) {
+					$thumb = Yii::app()->phpThumb->create($folder.$profileData->profilePic);
+					$thumb->adaptiveResize(100,100);
+					$thumb->save($cacheImg);
+				}
+				echo CHtml::image(Yii::app()->request->baseUrl.'/'.$cacheImg, "image").'<br>';
 			}
 		?>
 	</div>

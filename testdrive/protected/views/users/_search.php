@@ -17,6 +17,11 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->label($model,'email'); ?>
+		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->label($model,'organization'); ?>
 		<?php 
 			//echo $form->textField($model,'organization',array('size'=>60,'maxlength'=>128)); 
@@ -81,8 +86,13 @@
 	</div> -->
 
 	<div class="row">
-		<?php echo $form->label($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->label($model,'graduationYearSearch'); ?>
+		<?php echo $form->textField($model,'graduationYearSearch',array('size'=>60,'maxlength'=>4)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'concentrationSearch'); ?>
+		<?php echo $form->textField($model,'concentrationSearch',array('size'=>60,'maxlength'=>128)); ?>
 	</div>
 
 	<div class="row buttons">

@@ -114,7 +114,7 @@ class Profile extends CActiveRecord
 			'intramural' => 'Intramural Involvement',
 			'currentCity' => 'Current City',
 			'hometown' => 'Hometown',
-			'relationship' => 'Relationship',
+			'relationship' => 'Relationship Status',
 			'interests' => 'Interests',
 			'music' => 'Music',
 			'movies' => 'Movies',

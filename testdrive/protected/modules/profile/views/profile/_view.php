@@ -136,7 +136,7 @@
 
 						<?php
 							if ($profileData->phone) {
-								echo '<b>'.CHtml::encode($profileData->getAttributeLabel('phone')).':</b>';
+								echo '<b>'.CHtml::encode($profileData->getAttributeLabel('phone')).': </b>';
 								echo CHtml::encode($profileData->phone);
 								echo '<br>';
 							} 

@@ -84,7 +84,7 @@
 							'update' => '#university_id',
 							),
 						'class'=>'form-topMargin form-su-state'
-						)					
+						)
 					);
 			?>
 			<?php //echo $form->error($model,'state'); ?>

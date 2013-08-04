@@ -126,9 +126,15 @@ class UsersController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Users');
+		$model=new Users('search');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['Users']))
+			$model->attributes=$_GET['Users'];
+
+		//$dataProvider=new CActiveDataProvider('Users');
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'dataProvider'=>$model->search(),
+			'model'=>$model,
 		));
 	}
 

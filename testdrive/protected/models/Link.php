@@ -41,11 +41,11 @@ class Link extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('owner, link, dateLinked', 'required'),
+			array('owner, link', 'required'),
 			array('owner, link', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('linkID, owner, link, dateLinked', 'safe', 'on'=>'search'),
+			array('linkID, owner, link', 'safe', 'on'=>'search'),
 		);
 	}
 

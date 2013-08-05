@@ -57,4 +57,6 @@
 		}
 	?>
 
+	<?php echo CHtml::link('Link With', array('link/create')); ?>
+
 </div>

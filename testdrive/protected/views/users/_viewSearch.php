@@ -69,14 +69,17 @@
 					{
 						// handle return data
 						switch(data) {
-							case 1:
+							case '1':
+								$('#msg".$data->userID."').html('Already linked');
 								break;
-							case 2:
+							case '2':
+								$('#msg".$data->userID."').html('Link already requested');
 								break;
-							case 3:
+							case '3':
+									$('#msg".$data->userID."').html('Link request denied');
 								break;
 							default:
-								alert('Link request sent successfully');
+								$('#msg".$data->userID."').html('Link request sent successfully');
 								break;
 						}
 					}",
@@ -85,5 +88,13 @@
 			);
 		}
 	?>
+	
+	<?php
+		echo '<span id="msg'.$data->userID.'"></span>';
+	?>
+
+
 
 </div>
+
+

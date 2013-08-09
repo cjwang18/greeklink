@@ -60,15 +60,29 @@
 	<?php
 		// Show "Link With" only if logged in user not himself/herself
 		if (Yii::app()->user->id != $data->userID) {
-			echo CHtml::link('Link With', array('link/create', 'link'=>$data->userID));
-			/*echo CHtml::ajaxLink(
-				'Link With',
-				'link/create',
-				array(
-					'type' => 'POST',
-					'data'=>array('link'=>$data->userID),
-				),
-			);*/
+			//echo CHtml::link('Link With', array('link/create', 'link'=>$data->userID));
+			echo CHtml::ajaxLink(
+				"Link With",
+				Yii::app()->createUrl( 'link/create' ),
+				array( // ajaxOptions
+					'success' => "function( data )
+					{
+						// handle return data
+						switch(data) {
+							case 1:
+								break;
+							case 2:
+								break;
+							case 3:
+								break;
+							default:
+								alert('Link request sent successfully');
+								break;
+						}
+					}",
+					'data' => array( 'link' => $data->userID )
+				)
+			);
 		}
 	?>
 

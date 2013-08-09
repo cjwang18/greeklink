@@ -72,10 +72,9 @@ class LinkController extends Controller
 		if(isset($id))
 		{
 			$retval = $model->linkRequest($id);
-			if($retval == 0)
-				$this->redirect(Yii::app()->request->urlReferrer);
-			else {
+			if($retval) {
 				echo $retval;
+				Yii::app()->end();
 			}
 		}
 

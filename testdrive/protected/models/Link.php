@@ -17,6 +17,11 @@
  */
 class Link extends CActiveRecord
 {
+	const LR_NO_ERROR = 0;
+	const LR_ALREADY_LINKED = 1;
+	const LR_ALREADY_REQUESTED = 2;
+	const LR_REQUEST_DENIED = 3;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -124,15 +129,15 @@ class Link extends CActiveRecord
 		switch ($linkStatus) {
 			case '+':
 				$this->addError('link', 'Already linked');
-				return false;
+				return self::LR_ALREADY_LINKED;
 				break;
 			case '_':
 				$this->addError('link', 'Link already requested');
-				return false;
+				return self::LR_ALREADY_REQUESTED;
 				break;
 			case '-':
 				$this->addError('link', 'Link request denied');
-				return false;
+				return self::LR_REQUEST_DENIED;
 				break;
 			default:
 				$this->addError('link', 'no issues. link request will proceed');
@@ -142,7 +147,8 @@ class Link extends CActiveRecord
 		$this->owner = $owner;
 		$this->link = $link;
 		$this->linkStatus = '_';
-		return $this->save();
+		if ($this->save())
+			return self::LR_NO_ERROR;
 	}
 
 	public function approveLinkRequest() {

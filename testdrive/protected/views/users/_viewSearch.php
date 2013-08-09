@@ -59,8 +59,17 @@
 
 	<?php
 		// Show "Link With" only if logged in user not himself/herself
-		if (Yii::app()->user->id != $data->userID)
+		if (Yii::app()->user->id != $data->userID) {
 			echo CHtml::link('Link With', array('link/create', 'link'=>$data->userID));
+			/*echo CHtml::ajaxLink(
+				'Link With',
+				'link/create',
+				array(
+					'type' => 'POST',
+					'data'=>array('link'=>$data->userID),
+				),
+			);*/
+		}
 	?>
 
 </div>

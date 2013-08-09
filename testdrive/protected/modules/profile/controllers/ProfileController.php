@@ -53,9 +53,11 @@ class ProfileController extends Controller
 	public function actionView($id)
 	{
 		$model = $this->loadModel($id);
+
+		$uid = Yii::app()->user->id;
 		// User can only view his/her own profile
-		// TODO: allow user's links to view profile
-		if ($model->userID == Yii::app()->user->id) {
+		// or those whom he/she is linked with
+		if ($model->userID == $uid || Link::getLinkStatus($model->userID, $uid) == '+') {
 			$this->layout='//layouts/profile';
 			$this->render('view',array(
 				'model'=>$model,

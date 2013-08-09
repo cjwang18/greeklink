@@ -1,6 +1,7 @@
 <?php
 /* @var $this LinkController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var $pendingLinks CActiveDataProvider */
+/* @var $links CActiveDataProvider */
 
 $this->breadcrumbs=array(
 	'Links',
@@ -12,9 +13,17 @@ $this->menu=array(
 );
 ?>
 
+<h1>Link Requests</h1>
+
+<?php $this->widget('zii.widgets.CListView', array(
+	'dataProvider'=>$pendingLinks,
+	'itemView'=>'_viewLinkRequest',
+)); ?>
+
+<br><br>
 <h1>Links</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
-	'dataProvider'=>$dataProvider,
-	'itemView'=>'_view',
+	'dataProvider'=>$links,
+	'itemView'=>'_viewLink',
 )); ?>

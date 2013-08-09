@@ -57,6 +57,10 @@
 		}
 	?>
 
-	<?php echo CHtml::link('Link With', array('link/create')); ?>
+	<?php
+		// Show "Link With" only if logged in user not himself/herself
+		if (Yii::app()->user->id != $data->userID)
+			echo CHtml::link('Link With', array('link/create', 'link'=>$data->userID));
+	?>
 
 </div>

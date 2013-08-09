@@ -32,7 +32,7 @@ class LinkController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','approve','deny'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -67,11 +67,12 @@ class LinkController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Link']))
+		$id = Yii::app()->getRequest()->getQuery('link');
+
+		if(isset($id))
 		{
-			$model->attributes=$_POST['Link'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->linkID));
+			if($model->linkRequest($id))
+				$this->redirect(Yii::app()->request->urlReferrer);
 		}
 
 		$this->render('create',array(
@@ -122,9 +123,36 @@ class LinkController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Link');
+		// User's pending link requests
+		$c1 = new CDbCriteria();
+		$c1->with = array('owner0');
+		$c1->condition = 'link = :id AND linkStatus = :s';
+		$c1->params= array(
+			':id' => Yii::app()->user->id,
+			':s' => '_',
+		);
+		$c1->order = 'owner0.name';
+
+		$pendingLinks=new CActiveDataProvider('Link', array(
+			'criteria' => $c1,
+		));
+
+		// User's links
+		$c2 = new CDbCriteria();
+		$c2->with = array('owner0', 'link0');
+		$c2->condition = 'owner = :id OR link = :id';
+		$c2->params = array(
+			':id' => Yii::app()->user->id,
+		);
+		$c2->addColumnCondition(array('linkStatus'=>'+'));
+
+		$links = new CActiveDataProvider('Link', array(
+			'criteria' => $c2,
+		));
+
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'pendingLinks'=>$pendingLinks,
+			'links'=>$links,
 		));
 	}
 
@@ -169,5 +197,43 @@ class LinkController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+
+	public function actionApprove() {
+		// Requested links always have structure of:
+		// owner == friend
+		// link == you
+		$owner = Yii::app()->getRequest()->getQuery('id');
+		$link = Yii::app()->user->id;
+
+		// Get the link from DB
+		$model = Link::model()->findByPk(array(
+			'owner' => $owner,
+			'link' => $link,
+		));
+
+		// Approve link request
+		$model->approveLinkRequest();
+
+		$this->redirect(Yii::app()->request->urlReferrer);
+	}
+
+	public function actionDeny() {
+		// Requested links always have structure of:
+		// owner == friend
+		// link == you
+		$owner = Yii::app()->getRequest()->getQuery('id');
+		$link = Yii::app()->user->id;
+
+		// Get the link from DB
+		$model = Link::model()->findByPk(array(
+			'owner' => $owner,
+			'link' => $link,
+		));
+
+		// Approve link request
+		$model->denyLinkRequest();
+
+		$this->redirect(Yii::app()->request->urlReferrer);
 	}
 }

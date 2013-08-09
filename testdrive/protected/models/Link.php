@@ -4,9 +4,11 @@
  * This is the model class for table "links".
  *
  * The followings are the available columns in table 'links':
- * @property string $linkID
  * @property string $owner
  * @property string $link
+ * @property string $linkStatus
+ * @property string $dateRequested
+ * @property string $dateSeen
  * @property string $dateLinked
  *
  * The followings are the available model relations:
@@ -45,7 +47,7 @@ class Link extends CActiveRecord
 			array('owner, link', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('linkID, owner, link', 'safe', 'on'=>'search'),
+			array('owner, link', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,10 +70,11 @@ class Link extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'linkID' => 'Link',
-			'owner' => 'Owner',
-			'link' => 'Link',
-			'dateLinked' => 'Date Linked',
+			'owner' => 'Name',
+			'link' => 'Name',
+			'linkStatus' => 'Status',
+			'dateRequested' => 'Date Requested',
+			'dateLinked' => 'Linked Since',
 		);
 	}
 
@@ -86,7 +89,6 @@ class Link extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('linkID',$this->linkID,true);
 		$criteria->compare('owner',$this->owner,true);
 		$criteria->compare('link',$this->link,true);
 		$criteria->compare('dateLinked',$this->dateLinked,true);
@@ -94,5 +96,64 @@ class Link extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	/*public function beforeSave() {
+		// Set status to pending
+		$this->status = '_';
+
+		return parent::beforeSave();
+	}*/
+
+	public function getLinkStatus($uid1, $uid2) {
+		$link = Link::model()->find('owner = '.$uid1 . ' and link = '.$uid2);
+		if($link)
+			return $link->linkStatus;
+
+		$link = Link::model()->find('owner = '.$uid2 . ' and link = '.$uid1);
+		if($link)
+			return $link->linkStatus;
+
+		return false;
+	}
+
+	public function linkRequest($link) {
+		$owner = Yii::app()->user->id;
+		
+		$linkStatus = $this->getLinkStatus($owner, $link);
+		switch ($linkStatus) {
+			case '+':
+				$this->addError('link', 'Already linked');
+				return false;
+				break;
+			case '_':
+				$this->addError('link', 'Link already requested');
+				return false;
+				break;
+			case '-':
+				$this->addError('link', 'Link request denied');
+				return false;
+				break;
+			default:
+				$this->addError('link', 'no issues. link request will proceed');
+				break;
+		}
+		
+		$this->owner = $owner;
+		$this->link = $link;
+		$this->linkStatus = '_';
+		return $this->save();
+	}
+
+	public function approveLinkRequest() {
+		$this->linkStatus = '+';
+		$this->dateLinked = new CDbExpression('NOW()');
+		$this->saveAttributes(array('linkStatus', 'dateLinked'));
+	}
+
+	public function denyLinkRequest() {
+		$this->linkStatus = '-';
+		$this->dateLinked = new CDbExpression('NOW()');
+		$this->saveAttributes(array('linkStatus', 'dateLinked'));
 	}
 }

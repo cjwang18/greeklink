@@ -125,6 +125,8 @@ class Users extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		$criteria->with = array( 'profile' );
+		// Only the users who have been approved are searchable
+		$criteria->addColumnCondition(array('status'=>'+'));
 
 		$criteria->compare('userID',$this->userID);
 		$criteria->compare('name',$this->name,true);

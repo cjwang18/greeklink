@@ -172,7 +172,7 @@ class Users extends CActiveRecord
 		// Set the status to pending
 		$this->status = '_';
 
-		$this->birthday = date('Y-m-d', CDateTimeParser::parse($this->birthday, 'mm/dd/yyyy'));
+		$this->birthday = date('Y-m-d', CDateTimeParser::parse($this->birthday, 'MM/dd/yyyy'));
 
 		return parent::beforeSave();
 	}

@@ -47,7 +47,7 @@
 					),
 					'htmlOptions'=>array(
 						'class'=>'form-topMargin form-su-datePicker',
-						'placeholder'=>'Birthday',
+						'placeholder'=>'Birthday (mm/dd/yyyy)',
 					),
 				));
 			?>

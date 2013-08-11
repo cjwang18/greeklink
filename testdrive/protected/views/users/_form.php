@@ -27,10 +27,30 @@
 			)); ?>
 			<?php //echo $form->error($model,'name'); ?>
 
-			<?php echo $form->dateField($model,'birthday', array(
-				'class'=>'form-topMargin form-su-datePicker',
-				'placeholder'=>'Birthday',
-			)); ?>
+			<?php 
+				/*echo $form->dateField($model,'birthday', array(
+					'class'=>'form-topMargin form-su-datePicker',
+					'placeholder'=>'Birthday',
+				));*/
+
+				$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+					// 'name'=>'birthday',
+					'model'=>$model, // the name of the field
+					'attribute'=>'birthday',  // pre-fill the value
+					// additional javascript options for the date picker plugin
+					'options'=>array(
+						'showAnim'=>'fold',
+						'debug'=>true,
+						'constrainInput' => 'true',
+						'changeMonth' => 'true',
+						'changeYear' => 'true',
+					),
+					'htmlOptions'=>array(
+						'class'=>'form-topMargin form-su-datePicker',
+						'placeholder'=>'Birthday (mm/dd/yyyy)',
+					),
+				));
+			?>
 			<?php //echo $form->error($model,'birthday'); ?>
 
 			<?php 

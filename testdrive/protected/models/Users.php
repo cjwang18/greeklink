@@ -65,6 +65,7 @@ class Users extends CActiveRecord
 			array('email', 'compare', 'compareAttribute'=>'repeatEmail'),
 			array('email', 'unique'),
 			array('password', 'compare', 'compareAttribute'=>'repeatPassword'),
+			array('birthday', 'type', 'type'=>'date', 'dateFormat'=>'mm/dd/yyyy'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('userID, name, organization, state, university, birthday, gender, initiationYear, email, graduationYearSearch, concentrationSearch', 'safe', 'on'=>'search'),
@@ -170,6 +171,8 @@ class Users extends CActiveRecord
 
 		// Set the status to pending
 		$this->status = '_';
+
+		$this->birthday = date('Y-m-d', CDateTimeParser::parse($this->birthday, 'mm/dd/yyyy'));
 
 		return parent::beforeSave();
 	}

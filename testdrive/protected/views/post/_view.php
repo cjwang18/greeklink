@@ -33,5 +33,27 @@
 	<?php echo CHtml::encode($data->owner); ?>
 	<br />
 
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('allowLinks')); ?>:</b>
+	<?php echo CHtml::encode($data->allowLinks); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('allowChapter')); ?>:</b>
+	<?php echo CHtml::encode($data->allowChapter); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('allowUni')); ?>:</b>
+	<?php echo CHtml::encode($data->allowUni); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('allowOrg')); ?>:</b>
+	<?php echo CHtml::encode($data->allowOrg); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('allowAll')); ?>:</b>
+	<?php echo CHtml::encode($data->allowAll); ?>
+	<br />
+
+	*/ ?>
 
 </div>

@@ -46,6 +46,31 @@
 		<?php echo $form->textField($model,'owner',array('size'=>11,'maxlength'=>11)); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->label($model,'allowLinks'); ?>
+		<?php echo $form->textField($model,'allowLinks'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'allowChapter'); ?>
+		<?php echo $form->textField($model,'allowChapter'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'allowUni'); ?>
+		<?php echo $form->textField($model,'allowUni'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'allowOrg'); ?>
+		<?php echo $form->textField($model,'allowOrg'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'allowAll'); ?>
+		<?php echo $form->textField($model,'allowAll'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Search'); ?>
 	</div>

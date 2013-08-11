@@ -11,6 +11,11 @@
  * @property string $downvotes
  * @property string $author
  * @property string $owner
+ * @property integer $allowLinks
+ * @property integer $allowChapter
+ * @property integer $allowUni
+ * @property integer $allowOrg
+ * @property integer $allowAll
  *
  * The followings are the available model relations:
  * @property Comments[] $comments
@@ -46,11 +51,12 @@ class Post extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('post, datePosted, upvotes, downvotes, author, owner', 'required'),
+			array('post, upvotes, downvotes, author, owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'required'),
+			array('allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'numerical', 'integerOnly'=>true),
 			array('upvotes, downvotes, author, owner', 'length', 'max'=>11),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('postID, post, datePosted, upvotes, downvotes, author, owner', 'safe', 'on'=>'search'),
+			array('postID, post, datePosted, upvotes, downvotes, author, owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -82,6 +88,11 @@ class Post extends CActiveRecord
 			'downvotes' => 'Downvotes',
 			'author' => 'Author',
 			'owner' => 'Owner',
+			'allowLinks' => 'Links',
+			'allowChapter' => 'Chapter',
+			'allowUni' => 'University',
+			'allowOrg' => 'Organization',
+			'allowAll' => 'All',
 		);
 	}
 
@@ -103,9 +114,27 @@ class Post extends CActiveRecord
 		$criteria->compare('downvotes',$this->downvotes,true);
 		$criteria->compare('author',$this->author,true);
 		$criteria->compare('owner',$this->owner,true);
+		$criteria->compare('allowLinks',$this->allowLinks);
+		$criteria->compare('allowChapter',$this->allowChapter);
+		$criteria->compare('allowUni',$this->allowUni);
+		$criteria->compare('allowOrg',$this->allowOrg);
+		$criteria->compare('allowAll',$this->allowAll);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+	public function beforeValidate()
+	{
+		$this->author = Yii::app()->user->id;
+
+		// Make sure at least one is selected, otherwise don't save
+		if (!($this->allowLinks || $this->allowChapter || $this->allowUni || $this->allowUni || $this->allowOrg || $this->allowAll)) {
+			 $this->addError('visibilityError', 'Please select the visibility level of your post');
+			 return false;
+		}
+		return true;
+	}
+
 }

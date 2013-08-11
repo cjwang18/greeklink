@@ -28,5 +28,10 @@ $this->menu=array(
 		'downvotes',
 		'author',
 		'owner',
+		'allowLinks',
+		'allowChapter',
+		'allowUni',
+		'allowOrg',
+		'allowAll',
 	),
 )); ?>

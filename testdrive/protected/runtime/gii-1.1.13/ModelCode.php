@@ -2,8 +2,8 @@
 return array (
   'template' => 'default',
   'connectionId' => 'db',
-  'tablePrefix' => 'profiles_',
-  'modelPath' => 'application.modules.profile.models',
+  'tablePrefix' => '',
+  'modelPath' => 'application.models',
   'baseClass' => 'CActiveRecord',
   'buildRelations' => '1',
 );

@@ -91,6 +91,13 @@ class PostController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
+		$userId = Yii::app()->user->id;
+
+        if ($model->author != $userId)
+        {
+            throw new CHttpException(403,'You do ont have the permissions necessary to modify this post.');
+        }
+
 		if(isset($_POST['Post']))
 		{
 			$model->attributes=$_POST['Post'];

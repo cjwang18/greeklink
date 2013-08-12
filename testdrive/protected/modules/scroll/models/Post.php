@@ -51,7 +51,7 @@ class Post extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('post, upvotes, downvotes, author, owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'required'),
+			array('post, owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'required'),
 			array('allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'numerical', 'integerOnly'=>true),
 			array('upvotes, downvotes, author, owner', 'length', 'max'=>11),
 			// The following rule is used by search().
@@ -84,10 +84,10 @@ class Post extends CActiveRecord
 			'postID' => 'Post',
 			'post' => 'Post',
 			'datePosted' => 'Date Posted',
-			'upvotes' => 'Upvotes',
-			'downvotes' => 'Downvotes',
-			'author' => 'Author',
-			'owner' => 'Owner',
+			'upvotes' => 'Yays',
+			'downvotes' => 'Nays',
+			'author' => 'Posted By',
+			'owner' => 'Posted On',
 			'allowLinks' => 'Links',
 			'allowChapter' => 'Chapter',
 			'allowUni' => 'University',
@@ -125,7 +125,7 @@ class Post extends CActiveRecord
 		));
 	}
 
-	public function beforeValidate()
+	public function afterValidate()
 	{
 		$this->author = Yii::app()->user->id;
 

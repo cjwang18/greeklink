@@ -21,7 +21,7 @@
 		<?php echo $form->error($model,'post'); ?>
 	</div>
 
-	<div class="row">
+	<!-- <div class="row">
 		<?php echo $form->labelEx($model,'upvotes'); ?>
 		<?php echo $form->textField($model,'upvotes',array('size'=>11,'maxlength'=>11)); ?>
 		<?php echo $form->error($model,'upvotes'); ?>
@@ -31,7 +31,7 @@
 		<?php echo $form->labelEx($model,'downvotes'); ?>
 		<?php echo $form->textField($model,'downvotes',array('size'=>11,'maxlength'=>11)); ?>
 		<?php echo $form->error($model,'downvotes'); ?>
-	</div>
+	</div> -->
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'owner'); ?>
@@ -40,7 +40,7 @@
 	</div>
 
 	<div class="row">
-	 	<br><b>Visible by</b><br><br>
+	 	<br><b>Visible to</b><br><br>
 	</div>
 
 	<table style="width:50px;border:1px solid black;">

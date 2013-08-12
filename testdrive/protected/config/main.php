@@ -35,6 +35,9 @@ return array(
 		'profile'=>array(
 			'defaultController'=>'profile',
 		),
+		'scroll'=>array(
+			'defaultController'=>'post',
+		),
 		
 	),
 

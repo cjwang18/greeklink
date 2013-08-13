@@ -12,6 +12,7 @@ class ProfileModule extends CWebModule
 			'profile.models.*',
 			'profile.components.*',
 			'application.models.*',
+			'scroll.models.*',
 		));
 	}
 

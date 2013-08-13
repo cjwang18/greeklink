@@ -33,11 +33,11 @@
 		<?php echo $form->error($model,'downvotes'); ?>
 	</div> -->
 
-	<div class="row">
+<!-- 	<div class="row">
 		<?php echo $form->labelEx($model,'owner'); ?>
 		<?php echo $form->textField($model,'owner',array('size'=>11,'maxlength'=>11)); ?>
 		<?php echo $form->error($model,'owner'); ?>
-	</div>
+	</div> -->
 
 	<div class="row">
 	 	<br><b>Visible to</b><br><br>

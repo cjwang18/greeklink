@@ -110,7 +110,7 @@ class Link extends CActiveRecord
 		return parent::beforeSave();
 	}*/
 
-	public function getLinkStatus($uid1, $uid2) {
+	public static function getLinkStatus($uid1, $uid2) {
 		$link = Link::model()->find('owner = '.$uid1 . ' and link = '.$uid2);
 		if($link)
 			return $link->linkStatus;

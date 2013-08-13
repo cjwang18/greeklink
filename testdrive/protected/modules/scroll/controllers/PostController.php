@@ -7,6 +7,7 @@ class PostController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
+	public static $uID;
 
 	/**
 	 * @return array action filters
@@ -28,7 +29,7 @@ class PostController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','create','update','delete'),
+				'actions'=>array('index','view','create','update','delete','customAction'),
 				'users'=>array('@'),
 			),
 			array('deny',  // deny all users
@@ -52,9 +53,11 @@ class PostController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id)
 	{
 		$model=new Post;
+
+		echo "Owner: ".$id;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -62,6 +65,7 @@ class PostController extends Controller
 		if(isset($_POST['Post']))
 		{
 			$model->attributes=$_POST['Post'];
+			$model->owner = $id;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->postID));
 		}
@@ -169,4 +173,13 @@ class PostController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionCustomAction($id)
+	{
+		self::$uID = $id;
+		
+		$this->actionCreate($id);
+	}
+
+
 }

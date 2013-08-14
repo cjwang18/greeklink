@@ -194,6 +194,7 @@ class PostController extends Controller
 		$authorIsOwner->params = array(
 			':id' => $ownerID,
 		);
+		$authorIsOwner->order = 'datePosted DESC';
 
 		$scrollLeft = new CActiveDataProvider('Post', array(
 			'criteria' => $authorIsOwner,
@@ -205,6 +206,7 @@ class PostController extends Controller
 		$authorNotOwner->params = array(
 			':id' => $ownerID,
 		);
+		$authorNotOwner->order = 'datePosted DESC';
 
 		$scrollRight = new CActiveDataProvider('Post', array(
 			'criteria' => $authorNotOwner,

@@ -21,6 +21,7 @@ return array(
 		'application.extensions.YiiMailer.YiiMailer',
 		'application.helpers.*',
 		'application.modules.profile.models.*',
+		'application.modules.scroll.models.*',
 	),
 
 	'modules'=>array(

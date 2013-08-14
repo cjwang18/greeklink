@@ -7,7 +7,6 @@ class PostController extends Controller
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
 	public $layout='//layouts/column2';
-	public static $uID;
 
 	/**
 	 * @return array action filters
@@ -57,7 +56,7 @@ class PostController extends Controller
 	{
 		$model=new Post;
 
-		echo "Owner: ".$id;
+		//echo "Owner: ".$id;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -174,11 +173,48 @@ class PostController extends Controller
 		}
 	}
 
-	public function actionCustomAction($id)
+	public function actionCustomAction($ownerID)
 	{
-		self::$uID = $id;
-		
-		$this->actionCreate($id);
+		$model=new Post;
+
+		// Uncomment the following line if AJAX validation is needed
+		// $this->performAjaxValidation($model);
+
+		if(isset($_POST['Post']))
+		{
+			$model->attributes=$_POST['Post'];
+			$model->owner = $ownerID;
+			if($model->save())
+				$this->redirect(array('customAction','ownerID'=>$ownerID));
+		}
+
+		// Scroll Left: Author is Owner Posts
+		$authorIsOwner = new CDbCriteria();
+		$authorIsOwner->condition = 'author = :id AND owner = :id';
+		$authorIsOwner->params = array(
+			':id' => $ownerID,
+		);
+
+		$scrollLeft = new CActiveDataProvider('Post', array(
+			'criteria' => $authorIsOwner,
+		));
+
+		// Scroll Right: Author not Owner Posts
+		$authorNotOwner = new CDbCriteria();
+		$authorNotOwner->condition = 'author != :id AND owner = :id';
+		$authorNotOwner->params = array(
+			':id' => $ownerID,
+		);
+
+		$scrollRight = new CActiveDataProvider('Post', array(
+			'criteria' => $authorNotOwner,
+		));
+
+		$this->render('index',array(
+			'scrollLeft'=>$scrollLeft,
+			'scrollRight'=>$scrollRight,
+			'model'=>$model,
+		));
 	}
 
 

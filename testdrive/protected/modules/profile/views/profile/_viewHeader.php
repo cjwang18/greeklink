@@ -43,7 +43,7 @@
 
 			<?php echo CHtml::link('Edit Profile', array('update', 'id'=>$profileData->profileID)); ?>
 
-			<?php echo CHtml::link('Scroll',array('/scroll/post/customAction', 'id'=>$profileData->userID)); ?>
+			<?php echo CHtml::link('Scroll',array('/scroll/post/customAction', 'ownerID'=>$profileData->userID)); ?>
 
 		</div>
 	</div>

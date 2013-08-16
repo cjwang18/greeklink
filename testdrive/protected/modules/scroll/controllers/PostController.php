@@ -194,6 +194,13 @@ class PostController extends Controller
 		$authorIsOwner->params = array(
 			':id' => $ownerID,
 		);
+		$authorIsOwner->addCondition("(allowLinks=1 AND ".Users::checkLinkAffiliation(Yii::app()->user->id, $ownerID)."=1)
+			OR (owner=".Yii::app()->user->id.")
+			OR (allowChapter=1 AND ".Users::checkChapterAffiliation(Yii::app()->user->org, Yii::app()->user->uni, $ownerID)."=1)
+			OR (allowUni=1 AND ".Users::checkUniAffiliation(Yii::app()->user->uni, $ownerID)."=1)
+			OR (allowOrg=1 AND ".Users::checkOrgAffiliation(Yii::app()->user->org, $ownerID)."=1)
+			OR (allowAll=1)
+		");
 		$authorIsOwner->order = 'datePosted DESC';
 
 		$scrollLeft = new CActiveDataProvider('Post', array(
@@ -206,6 +213,13 @@ class PostController extends Controller
 		$authorNotOwner->params = array(
 			':id' => $ownerID,
 		);
+		$authorNotOwner->addCondition("(allowLinks=1 AND ".Users::checkLinkAffiliation(Yii::app()->user->id, $ownerID)."=1)
+			OR (owner=".Yii::app()->user->id.")
+			OR (allowChapter=1 AND ".Users::checkChapterAffiliation(Yii::app()->user->org, Yii::app()->user->uni, $ownerID)."=1)
+			OR (allowUni=1 AND ".Users::checkUniAffiliation(Yii::app()->user->uni, $ownerID)."=1)
+			OR (allowOrg=1 AND ".Users::checkOrgAffiliation(Yii::app()->user->org, $ownerID)."=1)
+			OR (allowAll=1)
+		");
 		$authorNotOwner->order = 'datePosted DESC';
 
 		$scrollRight = new CActiveDataProvider('Post', array(

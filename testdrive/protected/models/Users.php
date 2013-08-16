@@ -191,4 +191,77 @@ class Users extends CActiveRecord
 		$this->dateVerified = new CDbExpression('NOW()');
 		$this->saveAttributes(array('status', 'dateVerified'));
 	}
+
+	/**
+	 * Helper function called by CDbCriteria condition
+	 * that calls Link::getLinkStatus to find if two 
+	 * users are linked.
+	 *
+	 * $uid1 User 1
+	 * $uid2 User 2
+	 */
+	public function checkLinkAffiliation($uid1, $uid2) {
+		$linkStatus = Link::getLinkStatus($uid1, $uid2);
+		if ($linkStatus == '+')
+			return '1';
+
+		return '0';
+	}
+
+	/**
+	 * Function called by CDbCriteria condition to check if
+	 * the given organization and university matches those
+	 * of the user. By directly passing the $org and $uni,
+	 * we save on a query.
+	 *
+	 * $org organizationID parameter
+	 * $uni universityID parameter
+	 * $uid userID parameter
+	 */
+	public function checkChapterAffiliation($org, $uni, $uid) {
+		$owner = Users::model()->findByPk($uid);
+		$ownerOrg = $owner->organization;
+		$ownerUni = $owner->university;
+
+		if ($org == $ownerOrg && $uni == $ownerUni)
+			return '1';
+		
+		return '0';
+	}
+
+	/**
+	 * Function called by CDbCriteria condition to check if
+	 * the given university matches that of the user. 
+	 * By directly passing the $uni, we save on a query.
+	 *
+	 * $uni universityID parameter
+	 * $uid userID parameter
+	 */
+	public function checkUniAffiliation($uni, $uid) {
+		$owner = Users::model()->findByPk($uid);
+		$ownerUni = $owner->university;
+
+		if ($uni == $ownerUni)
+			return '1';
+
+		return '0';
+	}
+
+	/**
+	 * Function called by CDbCriteria condition to check if
+	 * the given organization matches that of the user. 
+	 * By directly passing the $org, we save on a query.
+	 *
+	 * $org organizationID parameter
+	 * $uid userID parameter
+	 */
+	public function checkOrgAffiliation($org, $uid) {
+		$owner = Users::model()->findByPk($uid);
+		$ownerOrg = $owner->organization;
+
+		if ($org == $ownerOrg)
+			return '1';
+
+		return '0';
+	}
 }

@@ -35,8 +35,10 @@ class UserIdentity extends CUserIdentity
 		else {
 			$this->errorCode=self::ERROR_NONE;
 			$this->_id=$user['userID'];
-			$this->setState('pid', $user['profileID']);
 			$this->setState('name', $user['name']);
+			$this->setState('org', $user['organization']);
+			$this->setState('uni', $user['university']);
+			$this->setState('pid', $user['profileID']);
 		}
 
 		// Change return statement to return the value not just a pass condition

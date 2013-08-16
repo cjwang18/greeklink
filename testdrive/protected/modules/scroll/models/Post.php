@@ -51,9 +51,10 @@ class Post extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('post, owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'required'),
+			array('post', 'required'),
 			array('allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'numerical', 'integerOnly'=>true),
 			array('upvotes, downvotes, author, owner', 'length', 'max'=>11),
+			array('owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('postID, post, datePosted, upvotes, downvotes, author, owner, allowLinks, allowChapter, allowUni, allowOrg, allowAll', 'safe', 'on'=>'search'),
@@ -130,10 +131,10 @@ class Post extends CActiveRecord
 		$this->author = Yii::app()->user->id;
 
 		// Make sure at least one is selected, otherwise don't save
-		if (!($this->allowLinks || $this->allowChapter || $this->allowUni || $this->allowUni || $this->allowOrg || $this->allowAll)) {
+		/*if (!($this->allowLinks || $this->allowChapter || $this->allowUni || $this->allowUni || $this->allowOrg || $this->allowAll)) {
 			 $this->addError('visibilityError', 'Please select the visibility level of your post');
 			 return false;
-		}
+		}*/
 		return true;
 	}
 

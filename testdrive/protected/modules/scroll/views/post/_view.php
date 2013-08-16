@@ -18,11 +18,11 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('upvotes')); ?>:</b>
-	<?php echo CHtml::encode($data->upvotes); ?>
+	<?php echo '<span id="post'.$data->postID.'upvotes">'.CHtml::encode($data->upvotes).'</span>'; ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('downvotes')); ?>:</b>
-	<?php echo CHtml::encode($data->downvotes); ?>
+	<?php echo '<span id="post'.$data->postID.'downvotes">'.CHtml::encode($data->downvotes).'</span>'; ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author')); ?>:</b>
@@ -33,27 +33,42 @@
 	<?php echo CHtml::encode($data->owner0->name); ?>
 	<br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('allowLinks')); ?>:</b>
-	<?php echo CHtml::encode($data->allowLinks); ?>
-	<br />
+	<?php
+		echo CHtml::ajaxButton(
+			'Yay', 
+			Yii::app()->createUrl('scroll/vote/yay'),
+			// ajaxOptions
+			array(
+				'data' => array(
+					'postID' => $data->postID,
+					'userID' => Yii::app()->user->id, // vote caster
+				),
+				'success' => "
+				function(data) {
+					$('#post".$data->postID."upvotes').html(data);
+				}
+				"
+			)
+		);
+	?>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('allowChapter')); ?>:</b>
-	<?php echo CHtml::encode($data->allowChapter); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('allowUni')); ?>:</b>
-	<?php echo CHtml::encode($data->allowUni); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('allowOrg')); ?>:</b>
-	<?php echo CHtml::encode($data->allowOrg); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('allowAll')); ?>:</b>
-	<?php echo CHtml::encode($data->allowAll); ?>
-	<br />
-
-	*/ ?>
+	<?php
+		echo CHtml::ajaxButton(
+			'Nay', 
+			Yii::app()->createUrl('scroll/vote/nay'),
+			// ajaxOptions
+			array(
+				'data' => array(
+					'postID' => $data->postID,
+					'userID' => Yii::app()->user->id, // vote caster
+				),
+				'success' => "
+				function(data) {
+					$('#post".$data->postID."downvotes').html(data);
+				}
+				"
+			)
+		);
+	?>
 
 </div>

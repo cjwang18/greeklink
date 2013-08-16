@@ -138,4 +138,16 @@ class Post extends CActiveRecord
 		return true;
 	}
 
+	public function upvote()
+	{
+		$this->upvotes = $this->upvotes + 1;
+		$this->saveAttributes(array('upvotes'));
+	}
+
+	public function downvote()
+	{
+		$this->downvotes = $this->downvotes + 1;
+		$this->saveAttributes(array('downvotes'));
+	}
+
 }

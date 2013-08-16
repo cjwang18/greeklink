@@ -213,3 +213,12 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+
+
+#############
+## Yii
+#############
+
+assets/
+protected/runtime/
+themes/classic/views/

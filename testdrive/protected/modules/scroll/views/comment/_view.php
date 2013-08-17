@@ -22,8 +22,7 @@
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('author')); ?>:</b>
-	<?php echo CHtml::encode($data->author); ?>
+	<?php echo CHtml::encode($data->author0->name); ?>
 	<br />
-
 
 </div>

@@ -200,7 +200,7 @@ class Users extends CActiveRecord
 	 * $uid1 User 1
 	 * $uid2 User 2
 	 */
-	public function checkLinkAffiliation($uid1, $uid2) {
+	public static function checkLinkAffiliation($uid1, $uid2) {
 		$linkStatus = Link::getLinkStatus($uid1, $uid2);
 		if ($linkStatus == '+')
 			return '1';
@@ -218,7 +218,7 @@ class Users extends CActiveRecord
 	 * $uni universityID parameter
 	 * $uid userID parameter
 	 */
-	public function checkChapterAffiliation($org, $uni, $uid) {
+	public static function checkChapterAffiliation($org, $uni, $uid) {
 		$owner = Users::model()->findByPk($uid);
 		$ownerOrg = $owner->organization;
 		$ownerUni = $owner->university;
@@ -237,7 +237,7 @@ class Users extends CActiveRecord
 	 * $uni universityID parameter
 	 * $uid userID parameter
 	 */
-	public function checkUniAffiliation($uni, $uid) {
+	public static function checkUniAffiliation($uni, $uid) {
 		$owner = Users::model()->findByPk($uid);
 		$ownerUni = $owner->university;
 
@@ -255,7 +255,7 @@ class Users extends CActiveRecord
 	 * $org organizationID parameter
 	 * $uid userID parameter
 	 */
-	public function checkOrgAffiliation($org, $uid) {
+	public static function checkOrgAffiliation($org, $uid) {
 		$owner = Users::model()->findByPk($uid);
 		$ownerOrg = $owner->organization;
 

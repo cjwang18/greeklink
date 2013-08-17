@@ -42,7 +42,7 @@ class Comment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('postID, comment, dateCommented, author', 'required'),
+			array('comment', 'required'),
 			array('postID', 'length', 'max'=>20),
 			array('author', 'length', 'max'=>11),
 			// The following rule is used by search().
@@ -59,7 +59,7 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'post' => array(self::BELONGS_TO, 'Posts', 'postID'),
+			'post' => array(self::BELONGS_TO, 'Post', 'postID'),
 			'author0' => array(self::BELONGS_TO, 'Users', 'author'),
 		);
 	}
@@ -70,8 +70,8 @@ class Comment extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'commentID' => 'Comment',
-			'postID' => 'Post',
+			'commentID' => 'Comment ID',
+			'postID' => 'Post ID',
 			'comment' => 'Comment',
 			'dateCommented' => 'Date Commented',
 			'author' => 'Author',
@@ -98,5 +98,15 @@ class Comment extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
+	}
+
+	public function afterValidate()
+	{
+		// Make sure at least one is selected, otherwise don't save
+		if ($this->postID == 0) {
+			 $this->addError('PostID', 'Error: Please go back to the post and click reply.');
+			 return false;
+		}
+		return true;
 	}
 }

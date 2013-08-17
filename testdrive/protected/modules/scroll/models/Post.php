@@ -69,7 +69,7 @@ class Post extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'comments' => array(self::HAS_MANY, 'Comments', 'postID'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'postID', 'order'=>'dateCommented ASC'),
 			'author0' => array(self::BELONGS_TO, 'Users', 'author'),
 			'owner0' => array(self::BELONGS_TO, 'Users', 'owner'),
 			'votes' => array(self::HAS_MANY, 'Votes', 'postID'),

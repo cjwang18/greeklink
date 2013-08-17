@@ -70,8 +70,10 @@ class CommentController extends Controller
 		if(isset($_POST['Comment']))
 		{
 			$model->attributes=$_POST['Comment'];
+			$model->postID = Yii::app()->getRequest()->getQuery('postID');
+			$model->author =  Yii::app()->user->id;
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->commentID));
+				$this->redirect(array('/scroll/post/scroll','ownerID'=>$model->post->owner0->userID));
 		}
 
 		$this->render('create',array(

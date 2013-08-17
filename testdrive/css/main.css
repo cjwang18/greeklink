@@ -227,3 +227,11 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+.commentContainer
+{
+	border: 1px solid;
+	border-color: #C9E0ED;
+	padding: 5px;
+	margin-top: 5px;
+}

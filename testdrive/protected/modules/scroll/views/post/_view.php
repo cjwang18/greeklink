@@ -33,6 +33,21 @@
 	<?php echo CHtml::encode($data->owner0->name); ?>
 	<br />
 
+	<?php echo CHtml::link('Reply',array('/scroll/comment/create', 'postID'=>$data->postID)); ?>
+
+	
+	<?php
+
+		foreach ($data->comments as $c) {
+			echo '<div class="commentContainer">';
+				echo '<b>'.CHtml::encode($c->author0->name).' ('.CHtml::encode($c->dateCommented).'): </b>';
+				echo CHtml::encode($c->comment);
+
+
+			echo '</div>';
+		}
+	?>
+
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('allowLinks')); ?>:</b>
 	<?php echo CHtml::encode($data->allowLinks); ?>

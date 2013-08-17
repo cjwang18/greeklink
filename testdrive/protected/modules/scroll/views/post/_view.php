@@ -33,12 +33,47 @@
 	<?php echo CHtml::encode($data->owner0->name); ?>
 	<br />
 
-<<<<<<< HEAD
 	<?php echo CHtml::link('Reply',array('/scroll/comment/create', 'postID'=>$data->postID)); ?>
 
-	
 	<?php
+		echo CHtml::ajaxButton(
+			'Yay', 
+			Yii::app()->createUrl('scroll/vote/yay'),
+			// ajaxOptions
+			array(
+				'data' => array(
+					'postID' => $data->postID,
+					'userID' => Yii::app()->user->id, // vote caster
+				),
+				'success' => "
+				function(data) {
+					$('#post".$data->postID."upvotes').html(data);
+				}
+				"
+			)
+		);
+	?>
 
+	<?php
+		echo CHtml::ajaxButton(
+			'Nay', 
+			Yii::app()->createUrl('scroll/vote/nay'),
+			// ajaxOptions
+			array(
+				'data' => array(
+					'postID' => $data->postID,
+					'userID' => Yii::app()->user->id, // vote caster
+				),
+				'success' => "
+				function(data) {
+					$('#post".$data->postID."downvotes').html(data);
+				}
+				"
+			)
+		);
+	?>	
+
+	<?php
 		foreach ($data->comments as $c) {
 			echo '<div class="commentContainer">';
 				echo '<b>'.CHtml::encode($c->author0->name).' ('.CHtml::encode($c->dateCommented).'): </b>';
@@ -69,44 +104,7 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('allowAll')); ?>:</b>
 	<?php echo CHtml::encode($data->allowAll); ?>
 	<br />
-=======
-	<?php
-		echo CHtml::ajaxButton(
-			'Yay', 
-			Yii::app()->createUrl('scroll/vote/yay'),
-			// ajaxOptions
-			array(
-				'data' => array(
-					'postID' => $data->postID,
-					'userID' => Yii::app()->user->id, // vote caster
-				),
-				'success' => "
-				function(data) {
-					$('#post".$data->postID."upvotes').html(data);
-				}
-				"
-			)
-		);
-	?>
->>>>>>> 4f4b492306dbb5d83c65e6a413cb499b6bc843f4
+	*/ ?>
 
-	<?php
-		echo CHtml::ajaxButton(
-			'Nay', 
-			Yii::app()->createUrl('scroll/vote/nay'),
-			// ajaxOptions
-			array(
-				'data' => array(
-					'postID' => $data->postID,
-					'userID' => Yii::app()->user->id, // vote caster
-				),
-				'success' => "
-				function(data) {
-					$('#post".$data->postID."downvotes').html(data);
-				}
-				"
-			)
-		);
-	?>
 
 </div>

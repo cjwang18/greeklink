@@ -84,6 +84,35 @@
 		}
 	?>
 
+
+
+	<div class="row">
+		<?php
+			$model = new Comment;
+			
+
+			$form=$this->beginWidget('CActiveForm', array(
+			    'id'=>'comment-form',
+			    'enableAjaxValidation'=>true,
+			    'action' => array('comment/create/postID/'.$data->postID), // change depending on your project
+			));
+
+			echo $form->errorSummary($model);
+
+			echo $form->labelEx($model,'comment');
+			echo "<br />";
+			echo $form->textArea($model,'comment',array('rows'=>6, 'cols'=>50));
+			echo $form->error($model,'comment');
+			echo "<br />";
+
+			echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
+			//echo CHtml::link('Comment',array('customAction', 'postID'=>$data->postID));
+
+			$this->endWidget();
+		?>
+	</div>
+
+
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('allowLinks')); ?>:</b>
 	<?php echo CHtml::encode($data->allowLinks); ?>

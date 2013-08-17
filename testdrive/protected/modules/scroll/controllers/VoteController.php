@@ -32,7 +32,7 @@ class VoteController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','yay','nay'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -167,6 +167,56 @@ class VoteController extends Controller
 		if(isset($_POST['ajax']) && $_POST['ajax']==='vote-form')
 		{
 			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+	}
+
+	public function actionYay($postID, $userID)
+	{
+		$vote = Vote::model()->findByAttributes(array(
+			'postID' => $postID,
+			'userID' => $userID
+		));
+		// Prevent same user from voting on same post
+		if (!$vote) {
+			$model=new Vote;
+
+			$model->postID = $postID;
+			$model->userID = $userID;
+			$model->action = 'y';
+
+			if ($model->save()) {
+				$model->post->upvote();
+				echo $model->post->upvotes;
+				Yii::app()->end();
+			}
+		} else {
+			echo $vote->post->upvotes;
+			Yii::app()->end();
+		}
+	}
+
+	public function actionNay($postID, $userID)
+	{
+		$vote = Vote::model()->findByAttributes(array(
+			'postID' => $postID,
+			'userID' => $userID
+		));
+		// Prevent same user from voting on same post
+		if (!$vote) {
+			$model=new Vote;
+
+			$model->postID = $postID;
+			$model->userID = $userID;
+			$model->action = 'n';
+
+			if ($model->save()) {
+				$model->post->downvote();
+				echo $model->post->downvotes;
+				Yii::app()->end();
+			}
+		} else {
+			echo $vote->post->downvotes;
 			Yii::app()->end();
 		}
 	}

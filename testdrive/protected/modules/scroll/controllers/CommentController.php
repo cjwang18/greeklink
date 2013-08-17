@@ -62,23 +62,41 @@ class CommentController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Comment;
+		//$model=new Comment;
 
 		// Uncomment the following line if AJAX validation is needed
-		$this->performAjaxValidation($model);
+		//$this->performAjaxValidation($model);
+		/*if (Yii::app()->getRequest()->getIsAjaxRequest()) {
+			echo CActiveForm::validate(array($model));
+			Yii::app()->end();
+		}*/
 
-		if(isset($_POST['Comment']))
-		{
-			$model->attributes=$_POST['Comment'];
-			$model->postID = Yii::app()->getRequest()->getQuery('postID');
-			$model->author =  Yii::app()->user->id;
-			if($model->save())
-				$this->redirect(array('/scroll/post/scroll','ownerID'=>$model->post->owner0->userID));
+		if (Yii::app()->request->isAjaxRequest) {
+			echo var_dump($_POST['Comment']);
+			//Yii::app()->end();
+			if(isset($_POST['Comment']))
+			{
+				$model = new Comment;
+				$model->attributes=$_POST['Comment'];
+				$model->postID = Yii::app()->getRequest()->getQuery('postID');
+				$model->author =  Yii::app()->user->id;
+				if(!$model->save())
+					exit(json_encode(array('result' => 'error', 'msg' => CHtml::errorSummary($model))));
+				else
+					exit(json_encode(array('result' => 'success', 'msg' => 'Your data has been successfully saved'))); //$this->redirect(array('/scroll/post/scroll','ownerID'=>$model->post->owner0->userID));
+			} else {
+				exit(json_encode(array('result' => 'error', 'msg' => 'No input data has been passed.')));
+			}
+		} else {
+			exit(json_encode(array('result' => 'error', 'msg' => 'Not AJAX request.')));
 		}
 
-		$this->render('create',array(
+		Yii::app()->end();
+		
+		//$this->redirect(Yii::app()->request->urlReferrer);
+		/*$this->render('create',array(
 			'model'=>$model,
-		));
+		));*/
 	}
 
 	/**

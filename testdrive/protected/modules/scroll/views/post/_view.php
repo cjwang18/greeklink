@@ -92,9 +92,13 @@
 			
 
 			$form=$this->beginWidget('CActiveForm', array(
-			    'id'=>'comment-form',
-			    'enableAjaxValidation'=>true,
-			    'action' => array('comment/create/postID/'.$data->postID), // change depending on your project
+				'id'=>'comment-form-post'.$data->postID,
+				'enableAjaxValidation'=>false,
+				//'action' => array('comment/create/postID/'.$data->postID), // change depending on your project
+				'htmlOptions'=>array(
+					'onsubmit'=>"return false;",/* Disable normal form submit */
+					'onkeypress'=>" if(event.keyCode == 13){ send($data->postID); } " /* Do ajax call when user presses enter key */
+				),
 			));
 
 			echo $form->errorSummary($model);
@@ -105,12 +109,49 @@
 			echo $form->error($model,'comment');
 			echo "<br />";
 
-			echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
-			//echo CHtml::link('Comment',array('customAction', 'postID'=>$data->postID));
+			//echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
+			
+			/*echo CHtml::ajaxSubmitButton(
+				'Comment',
+				Yii::app()->createUrl('scroll/comment/create/postID/'.$data->postID),
+				// ajaxOptions
+				array(
+					'type' => 'POST',
+					'dataType' => 'json',
+					'success' => "
+					function(data) {
+						console.log(data);
+					}
+					"
+				)
+			);*/
+
+			echo CHtml::Button('Comment',array('onclick'=>"send($data->postID);"));
 
 			$this->endWidget();
 		?>
 	</div>
+
+	<script type="text/javascript">
+		function send(postID)
+		{
+			var data = $('#comment-form-post'+postID).serialize();
+			console.log(data);
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo Yii::app()->createAbsoluteUrl("scroll/comment/create/postID/' + postID + '"); ?>',
+				data:data,
+				success:function(data){
+					console.log(data); 
+				},
+				error: function(data) { // if error occured
+					alert('Error occured.please try again');
+					console.log(data);
+				},
+				dataType:'html'
+			});
+		}
+	</script>
 
 
 	<?php /*

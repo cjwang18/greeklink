@@ -72,8 +72,6 @@ class CommentController extends Controller
 		}*/
 
 		if (Yii::app()->request->isAjaxRequest) {
-			echo var_dump($_POST['Comment']);
-			//Yii::app()->end();
 			if(isset($_POST['Comment']))
 			{
 				$model = new Comment;
@@ -82,8 +80,16 @@ class CommentController extends Controller
 				$model->author =  Yii::app()->user->id;
 				if(!$model->save())
 					exit(json_encode(array('result' => 'error', 'msg' => CHtml::errorSummary($model))));
-				else
-					exit(json_encode(array('result' => 'success', 'msg' => 'Your data has been successfully saved'))); //$this->redirect(array('/scroll/post/scroll','ownerID'=>$model->post->owner0->userID));
+				else {
+					//exit(json_encode(array('result' => 'success', 'msg' => 'Your data has been successfully saved')));
+					// Send all comments of post as AJAX response
+					foreach ($model->post->comments as $c) {
+						echo '<div class="commentContainer">';
+							echo '<b>'.CHtml::encode($c->author0->name).' ('.CHtml::encode($c->dateCommented).'): </b>';
+							echo CHtml::encode($c->comment);
+						echo '</div>';
+					}
+				}
 			} else {
 				exit(json_encode(array('result' => 'error', 'msg' => 'No input data has been passed.')));
 			}

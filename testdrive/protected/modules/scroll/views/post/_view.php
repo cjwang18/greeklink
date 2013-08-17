@@ -74,25 +74,22 @@
 	?>	
 
 	<?php
+		echo '<div id="post'.$data->postID.'CommentsContainer">';
 		foreach ($data->comments as $c) {
 			echo '<div class="commentContainer">';
 				echo '<b>'.CHtml::encode($c->author0->name).' ('.CHtml::encode($c->dateCommented).'): </b>';
 				echo CHtml::encode($c->comment);
-
-
 			echo '</div>';
 		}
+		echo '</div>';
 	?>
-
-
 
 	<div class="row">
 		<?php
 			$model = new Comment;
 			
-
 			$form=$this->beginWidget('CActiveForm', array(
-				'id'=>'comment-form-post'.$data->postID,
+				'id'=>'post'.$data->postID.'CommentForm',
 				'enableAjaxValidation'=>false,
 				//'action' => array('comment/create/postID/'.$data->postID), // change depending on your project
 				'htmlOptions'=>array(
@@ -109,23 +106,6 @@
 			echo $form->error($model,'comment');
 			echo "<br />";
 
-			//echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save');
-			
-			/*echo CHtml::ajaxSubmitButton(
-				'Comment',
-				Yii::app()->createUrl('scroll/comment/create/postID/'.$data->postID),
-				// ajaxOptions
-				array(
-					'type' => 'POST',
-					'dataType' => 'json',
-					'success' => "
-					function(data) {
-						console.log(data);
-					}
-					"
-				)
-			);*/
-
 			echo CHtml::Button('Comment',array('onclick'=>"send($data->postID);"));
 
 			$this->endWidget();
@@ -135,20 +115,24 @@
 	<script type="text/javascript">
 		function send(postID)
 		{
-			var data = $('#comment-form-post'+postID).serialize();
+			var data = $('#post'+postID+'CommentForm').serialize();
 			console.log(data);
 			$.ajax({
 				type: 'POST',
 				url: '<?php echo Yii::app()->createAbsoluteUrl("scroll/comment/create/postID/' + postID + '"); ?>',
-				data:data,
-				success:function(data){
-					console.log(data); 
+				data: data,
+				success: function(data){
+					console.log(data);
+					// Clear comment box after submission
+					$('#post'+postID+'CommentForm textarea').val('');
+					// Display AJAX response in posts commentContainer
+					$('#post'+postID+'CommentsContainer').html(data);
 				},
 				error: function(data) { // if error occured
-					alert('Error occured.please try again');
+					//alert('Error occurred. Please try again.');
 					console.log(data);
 				},
-				dataType:'html'
+				dataType: 'html'
 			});
 		}
 	</script>

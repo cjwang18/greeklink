@@ -219,6 +219,6 @@ pip-log.txt
 ## Yii
 #############
 
-assets/
+#assets/
 protected/runtime/
 themes/classic/views/

@@ -11,6 +11,9 @@ class ScrollModule extends CWebModule
 		$this->setImport(array(
 			'scroll.models.*',
 			'scroll.components.*',
+			'application.modules.nfy.components.*',
+			'application.modules.nfy.models.*',
+			'application.modules.nfy.extensions.webNotifications.WebNotifications',
 		));
 	}
 

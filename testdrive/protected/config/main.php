@@ -22,6 +22,9 @@ return array(
 		'application.helpers.*',
 		'application.modules.profile.models.*',
 		'application.modules.scroll.models.*',
+		'application.modules.nfy.components.Nfy',
+		'application.modules.nfy.models.*',
+		'application.modules.nfy.extensions.webNotifications.WebNotifications',
 	),
 
 	'modules'=>array(
@@ -38,6 +41,9 @@ return array(
 		),
 		'scroll'=>array(
 			'defaultController'=>'post',
+		),
+		'nfy'=>array(
+			'userClass'=>'Users',
 		),
 		
 	),

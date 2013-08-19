@@ -16,6 +16,8 @@
  */
 class Comment extends CActiveRecord
 {
+	public $_old;
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -109,4 +111,18 @@ class Comment extends CActiveRecord
 		}
 		return true;
 	}
+
+	public static function match($data) {
+        return $data['new']->attribute == 'value';
+    }
+    public function afterFind(){
+        $this->_old = clone $this;
+        return parent::afterFind();
+    }
+    public function afterSave() {
+        $old = clone $this;
+        $old->setAttributes($this->_old);
+        Nfy::log(array('old'=>$old,'new'=>$this));
+        return parent::afterSave();
+    }
 }

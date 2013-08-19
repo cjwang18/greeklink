@@ -9,6 +9,12 @@ $this->breadcrumbs=array(
 );
 ?>
 
+<?php
+	$this->widget('nfy.extensions.webNotifications.WebNotifications', array(
+		'url'=>$this->createUrl('/nfy/default/poll')
+	));
+?>
+
 <h1>Create Post</h1>
 
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>
